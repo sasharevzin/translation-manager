@@ -3,5 +3,5 @@ class Translation < ActiveRecord::Base
            -> { where('id != parent_id') },
            class_name: "Translation",
            foreign_key: "parent_id"
-  belongs_to :english_translation, class_name: "Translation"
+  belongs_to :parent_translation, class_name: "Translation"
 end
