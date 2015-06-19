@@ -3,8 +3,12 @@
 #    -  '**/*.thor'
 #    -  '**/*.rake'
 
+# If enabled wants 1_000_000 instead of 1000000
+Style/NumericLiterals:
+  Enabled: false
+
 Style/LineLength:
-  Max: 120
+  Max: 130
 
 Style/PerlBackrefs:
   Enabled: false
@@ -19,9 +23,14 @@ Style/SignalException:
 Style/MethodLength:
   Max: 30
 
-Style/NumericLiterals:
-  MinDigits: 16
+Metrics/AbcSize:
+  Max: 15
 
+Style/TrivialAccessors:
+  Enabled: false
+
+Metrics/ClassLength:
+  Max: 150
 
 #Style/CaseIndentation:
 #  IndentWhenRelativeTo: case
