@@ -28,5 +28,6 @@ end
 
 group :test do
   gem 'shoulda'
+  gem 'simplecov'
   gem 'shoulda-matchers', require: false
 end
