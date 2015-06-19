@@ -18,4 +18,10 @@ RSpec.describe Source, type: :model do
   context 'relationships' do
     it { expect(subject).to have_many(:translations) }
   end
+
+  context 'validations' do
+    it { expect(subject).to validate_presence_of(:text) }
+    it { expect(subject).to validate_presence_of(:language) }
+  end
+
 end
