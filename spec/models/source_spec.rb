@@ -22,6 +22,8 @@ RSpec.describe Source, type: :model do
   context 'validations' do
     it { expect(subject).to validate_presence_of(:text) }
     it { expect(subject).to validate_presence_of(:language) }
+    it { expect(subject).to_not allow_value("ab-XY").for(:language) }
+    it { expect(subject).to allow_value("en-US").for(:language) }
   end
 
 end
