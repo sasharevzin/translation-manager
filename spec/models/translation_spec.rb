@@ -18,4 +18,11 @@ RSpec.describe Translation, type: :model do
   context 'relationships' do
     it { expect(subject).to belong_to(:source) }
   end
+
+  context 'validations' do
+    it { expect(subject).to validate_presence_of(:text) }
+    it { expect(subject).to validate_presence_of(:language) }
+    it { expect(subject).to validate_presence_of(:source_id) }
+    it { expect(subject).to validate_numericality_of(:source_id) }
+  end
 end
