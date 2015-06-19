@@ -3,5 +3,4 @@ class Translation < ActiveRecord::Base
 
   validates :text, presence: true
   validates :language, presence: true, locale: true
-  validates :source_id, presence: true, numericality: true
 end
