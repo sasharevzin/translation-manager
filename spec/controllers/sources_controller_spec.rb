@@ -19,9 +19,15 @@ RSpec.describe SourcesController, type: :controller do
   end
 
   describe '#create' do
-    it 'returns 200 response for successful creation' do
+    it 'returns 201 response for successful creation' do
       post :create, source: valid_attributes
       expect(response.status).to eq(201)
+    end
+
+    it 'changes the count of Source translations by one on successful creation' do
+      expect{
+          post :create, source: valid_attributes
+        }.to change{ Source.count}.by(1)
     end
   end
 end
