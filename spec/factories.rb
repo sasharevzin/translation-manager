@@ -1,4 +1,5 @@
 require 'faker'
+
 FactoryGirl.define do
   factory :source do
     language 'en_US'

@@ -1,0 +1,32 @@
+# AllCops:
+#   Include:
+#    -  '**/*.thor'
+#    -  '**/*.rake'
+
+Style/LineLength:
+  Max: 120
+
+Style/PerlBackrefs:
+  Enabled: false
+
+# We want to allow one arg, can't do this by default
+Style/FormatString:
+  EnforcedStyle: sprintf
+
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/MethodLength:
+  Max: 30
+
+Style/NumericLiterals:
+  MinDigits: 16
+
+
+#Style/CaseIndentation:
+#  IndentWhenRelativeTo: case
+
+# We want this, but it doesn't work when we disable it!@?
+# Style/TrivialAccessors:
+#   Enabled: true
+#   AllowDSLWriters: true
