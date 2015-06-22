@@ -74,6 +74,12 @@ RSpec.describe SourcesController, type: :controller do
           expect(assigns(:source)).to be_a_new(Source)
         end
 
+        it 'assigns a newly created but unsaved source translation as @source' do
+          source_params[:translations_attributes]['0'][:language] = 'abc'
+          post :create, source: source_params
+          expect(assigns(:source)).to be_a_new(Source)
+        end
+
         it 're-renders new template' do
           post :create, source: source_params
           expect(response).to render_template(:new)
