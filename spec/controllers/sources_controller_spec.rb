@@ -18,6 +18,18 @@ RSpec.describe SourcesController, type: :controller do
             }
   end
 
+  describe 'GET #new' do
+    it 'assigns a new source as @source' do
+      get :new, {}
+      expect(assigns(:source)).to be_a_new(Source)
+    end
+
+    it 'assigns translations as @translations' do
+      get :new, {}
+      expect(assigns(:translations)).to be_a_new(Translation)
+    end
+  end
+
   describe 'POST #create' do
     describe 'with valid params' do
       it 'returns 302 response for successful creation' do

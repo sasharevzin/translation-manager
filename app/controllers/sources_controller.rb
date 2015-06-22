@@ -4,7 +4,7 @@ class SourcesController < ApplicationController
 
   def new
     @source = Source.new
-    @translations = 2.times { @source.translations.build }
+    @translations = @source.translations.build
   end
 
   def create
