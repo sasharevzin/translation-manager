@@ -1,23 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SourcesController, type: :controller do
-  let(:valid_attributes) do
-    {  language:'en-US',
-               text: Faker::Lorem.paragraph,
-               translations_attributes:
-               {
-                '0' => {
-                    language: 'en-US',
-                    text: Faker::Lorem.paragraph
-                    },
-                '1' => {
-                  language: 'en-US',
-                  text: Faker::Lorem.paragraph
-                  }
-              }
-            }
-  end
-
+  let(:valid_attributes) {Fabricate.attributes_for(:source)}
   describe 'GET #new' do
     it 'assigns a new source as @source' do
       get :new, {}
