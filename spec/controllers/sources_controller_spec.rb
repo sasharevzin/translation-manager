@@ -112,4 +112,14 @@ RSpec.describe SourcesController, type: :controller do
       expect(assigns(:source)).to be_kind_of(Source)
     end
   end
+
+  describe 'GET #edit' do
+    it 'assigns source as @source' do
+      source = Fabricate(:source)
+      get :edit, id: source.id
+      expect(assigns(:source)).to be_kind_of(Source)
+    end
+  end
+
+
 end

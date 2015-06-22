@@ -22,6 +22,10 @@ class SourcesController < ApplicationController
     @source = Source.find(params[:id])
   end
 
+  def edit
+    @source = Source.find(params[:id])
+  end
+
   private
   def source_params
     params.require(:source)
