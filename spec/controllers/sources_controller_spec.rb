@@ -38,16 +38,48 @@ RSpec.describe SourcesController, type: :controller do
     end
 
     describe 'with invalid params' do
-      it 'should raise exception if required params are not passed' do
-        expect{
-          post :create
-        }.to raise_error(ActionController::ParameterMissing)
+      describe 'source attributes' do
+        it 'should raise exception if required params are not passed' do
+          expect{
+            post :create
+          }.to raise_error(ActionController::ParameterMissing)
+        end
+
+        it 'assigns a newly created but unsaved source translation as @source' do
+          post :create, source: { language: 'zy', text: Faker::Lorem.paragraph}
+          expect(assigns(:source)).to be_a_new(Source)
+        end
+
+        it 're-renders new template' do
+          post :create, source: { language: 'zy', text: Faker::Lorem.paragraph}
+          expect(response).to render_template(:new)
+        end
       end
 
-      it 'assigns a newly created but unsaved source translation as @source' do
-        post :create, source: { language: 'zy', text: Faker::Lorem.paragraph}
-        expect(assigns(:source)).to be_a_new(Source)
+      describe 'translations attributes' do
+        let(:source_params) do
+          {  language:'en-US',
+               text: Faker::Lorem.paragraph,
+               translations_attributes:
+               {
+                '0' => {
+                    text: Faker::Lorem.paragraph
+                  }
+              }
+            }
+        end
+
+        it 'assigns a newly created but unsaved source translation as @source' do
+          post :create, source: source_params
+          expect(assigns(:source)).to be_a_new(Source)
+        end
+
+        it 're-renders new template' do
+          post :create, source: source_params
+          expect(response).to render_template(:new)
+        end
       end
+
     end
   end
 
