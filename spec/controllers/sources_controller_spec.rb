@@ -102,8 +102,14 @@ RSpec.describe SourcesController, type: :controller do
           expect(response).to render_template(:new)
         end
       end
-
     end
   end
 
+  describe 'GET #show' do
+    it 'assigns source as @source' do
+      source = Fabricate(:source)
+      get :show, id: source.id
+      expect(assigns(:source)).to be_kind_of(Source)
+    end
+  end
 end
