@@ -1,5 +1,7 @@
 class SourcesController < ApplicationController
   def index
+    @sources = Source.includes(:translations)
+                .paginate(page: params[:page], per_page: params[:per_page])
   end
 
   def new

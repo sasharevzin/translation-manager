@@ -2,6 +2,27 @@ require 'rails_helper'
 
 RSpec.describe SourcesController, type: :controller do
   let(:valid_attributes) {Fabricate.attributes_for(:source)}
+
+  describe 'GET #index' do
+    it 'assigns sources as @sources' do
+      get :index
+      expect(assigns(:sources)).to be_kind_of(ActiveRecord::Relation)
+    end
+
+    it 'returns first source from @sources' do
+      2.times { Fabricate(:source) }
+      get :index
+      expect(assigns(:sources).first).to be_kind_of(Source)
+    end
+
+    it 'returns translations from first source from @sources' do
+      2.times { Fabricate(:source) }
+      get :index
+      expect(assigns(:sources).first.translations.first).to be_kind_of(Translation)
+    end
+
+  end
+
   describe 'GET #new' do
     it 'assigns a new source as @source' do
       get :new, {}
