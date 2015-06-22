@@ -1,0 +1,48 @@
+<%= form_for(@source) do |f| %>
+  <% if @source.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@source.errors.count, "error") %> prohibited this source translation from being saved:</h2>
+      <ul>
+      <% @source.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :language %><br>
+    <%= f.text_field :language %>
+ </div>
+
+ <div class="field">
+    <%= f.label :context %><br>
+    <%= f.text_field :context %>
+ </div>
+
+
+ <div class="field">
+    <%= f.label :text %><br>
+    <%= f.text_area :text , required: true%>
+ </div>
+
+
+ <h2>Translations</h2>
+ <%= f.fields_for :translations do |translation| %>
+    <div class="translations_fields">
+      <div class="field">
+        <%= translation.label :language %><br>
+        <%= translation.text_field :language %>
+      </div>
+
+      <div class="field">
+        <%= translation.label :text %><br>
+        <%= translation.text_area :text , required: true%>
+       </div>
+    </div>
+ <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
