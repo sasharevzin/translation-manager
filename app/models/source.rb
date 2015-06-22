@@ -1,5 +1,5 @@
 class Source < ActiveRecord::Base
-  has_many :translations
+  has_many :translations, dependent: :destroy
   accepts_nested_attributes_for :translations
 
   validates :text, presence: true
