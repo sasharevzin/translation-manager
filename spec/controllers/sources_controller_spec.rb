@@ -18,16 +18,37 @@ RSpec.describe SourcesController, type: :controller do
             }
   end
 
-  describe '#create' do
-    it 'returns 201 response for successful creation' do
-      post :create, source: valid_attributes
-      expect(response.status).to eq(201)
+  describe 'POST #create' do
+    describe 'with valid params' do
+      it 'returns 302 response for successful creation' do
+        post :create, source: valid_attributes
+        expect(response.status).to eq(302)
+      end
+
+      it 'changes the count of Source translations by one on successful creation' do
+        expect{
+            post :create, source: valid_attributes
+          }.to change{ Source.count}.by(1)
+      end
+
+      it 'redirects to source translation page upon successful creation of source' do
+        post :create, source: valid_attributes
+        expect(response).to redirect_to(Source.last)
+      end
     end
 
-    it 'changes the count of Source translations by one on successful creation' do
-      expect{
-          post :create, source: valid_attributes
-        }.to change{ Source.count}.by(1)
+    describe 'with invalid params' do
+      it 'should raise exception if required params are not passed' do
+        expect{
+          post :create
+        }.to raise_error(ActionController::ParameterMissing)
+      end
+
+      it 'assigns a newly created but unsaved source translation as @source' do
+        post :create, source: { language: 'zy', text: Faker::Lorem.paragraph}
+        expect(assigns(:source)).to be_a_new(Source)
+      end
     end
   end
+
 end

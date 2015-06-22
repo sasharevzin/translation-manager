@@ -10,7 +10,7 @@ class SourcesController < ApplicationController
   def create
     @source = Source.new(source_params)
     if @source.save
-      redirect_to @source, status: :created, notice: 'Source and translations are saved successfully'
+      redirect_to @source, notice: 'Source and translations are saved successfully'
     else
       render action: 'new'
     end
