@@ -121,5 +121,26 @@ RSpec.describe SourcesController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    describe 'with valid attributes' do
+      it 'updates the source record' do
+        source = Fabricate(:source)
+        source_params = Fabricate.attributes_for(:source)
+        source_params[:text] = Faker::Lorem.paragraph
+        source_params[:language] = 'en-GB'
+        patch :update, source: source_params, id: source.id
+        source.reload
+        expect(source.text).to eq(source_params[:text])
+        expect(source.language).to eq(source_params[:language])
+      end
 
+      it 'redirects to show page' do
+        source = Fabricate(:source)
+        source_params = Fabricate.attributes_for(:source)
+        patch :update, source: source_params, id: source.id
+        expect(response).to redirect_to(source)
+      end
+
+    end
+  end
 end

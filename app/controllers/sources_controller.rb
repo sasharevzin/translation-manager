@@ -1,5 +1,5 @@
 class SourcesController < ApplicationController
-  before_action :get_source, only: [:edit, :show]
+  before_action :get_source, only: [:edit, :show, :update]
 
   def index
     @sources = Source.includes(:translations)
@@ -20,6 +20,14 @@ class SourcesController < ApplicationController
     end
   end
 
+  def update
+    if @source.update_attributes(source_params)
+      redirect_to @source, notice: 'Source and translations are updated successfully'
+    else
+      render action: 'edit'
+    end
+  end
+
   private
   def get_source
     @source = Source.find(params[:id])
@@ -28,6 +36,6 @@ class SourcesController < ApplicationController
   def source_params
     params.require(:source)
     .permit(:language, :text, :context,
-       translations_attributes: [ :language, :text, :context ])
+       translations_attributes: [:language, :text, :context ])
   end
 end
