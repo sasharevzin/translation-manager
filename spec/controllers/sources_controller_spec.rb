@@ -167,9 +167,20 @@ RSpec.describe SourcesController, type: :controller do
         patch :update, source: source_params, id: source.id
         expect(response).to render_template(:edit)
       end
+    end
+  end
 
-
+  describe 'DELETE #destroy' do
+    let!(:source) { Fabricate(:source)}
+    it 'decreases the count by -1' do
+      expect{
+        delete :destroy, id: source.id
+      }.to change(Source, :count).by(-1)
     end
 
+    it 'redirects to index page' do
+      delete :destroy, id: source.id
+      expect(response).to redirect_to(sources_url)
+    end
   end
 end

@@ -1,5 +1,5 @@
 class SourcesController < ApplicationController
-  before_action :get_source, only: [:edit, :show, :update]
+  before_action :get_source, only: [:edit, :show, :update, :destroy]
 
   def index
     @sources = Source.includes(:translations)
@@ -26,6 +26,11 @@ class SourcesController < ApplicationController
     else
       render action: 'edit'
     end
+  end
+
+  def destroy
+    @source.destroy
+    redirect_to sources_url, notice: 'Source and translations destroyed successfully'
   end
 
   private
