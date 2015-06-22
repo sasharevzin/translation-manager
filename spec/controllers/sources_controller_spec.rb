@@ -140,7 +140,36 @@ RSpec.describe SourcesController, type: :controller do
         patch :update, source: source_params, id: source.id
         expect(response).to redirect_to(source)
       end
+    end
+
+    describe 'with invalid attributes' do
+      it 'raises exception if given no params' do
+        source = Fabricate(:source)
+        expect{
+          patch :update, id: source.id
+          }.to raise_error(ActionController::ParameterMissing)
+      end
+
+      it 'assigns source to @source' do
+        source = Fabricate(:source)
+        source_params = {}
+        source_params[:text] = Faker::Lorem.paragraph
+        source_params[:language] = 'abc'
+        patch :update, source: source_params, id: source.id
+        expect(assigns(:source)).to be_kind_of(Source)
+      end
+
+      it 're-renders the edit page' do
+        source = Fabricate(:source)
+        source_params = {}
+        source_params[:text] = Faker::Lorem.paragraph
+        source_params[:language] = 'abc'
+        patch :update, source: source_params, id: source.id
+        expect(response).to render_template(:edit)
+      end
+
 
     end
+
   end
 end
