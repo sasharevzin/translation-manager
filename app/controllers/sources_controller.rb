@@ -1,4 +1,6 @@
 class SourcesController < ApplicationController
+  before_action :get_source, only: [:edit, :show]
+
   def index
     @sources = Source.includes(:translations)
                 .paginate(page: params[:page], per_page: params[:per_page])
@@ -18,15 +20,11 @@ class SourcesController < ApplicationController
     end
   end
 
-  def show
-    @source = Source.find(params[:id])
-  end
-
-  def edit
-    @source = Source.find(params[:id])
-  end
-
   private
+  def get_source
+    @source = Source.find(params[:id])
+  end
+
   def source_params
     params.require(:source)
     .permit(:language, :text, :context,
