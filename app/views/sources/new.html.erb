@@ -12,7 +12,7 @@
 
   <div class="field">
     <%= f.label :language %><br>
-    <%= f.text_field :language %>
+    <%= f.select :language , Source.supported_languages %>
  </div>
 
  <div class="field">
@@ -28,20 +28,31 @@
 
 
  <h2>Translations</h2>
+<table class='table table-bordered'>
+  <thead>
+    <tr>
+      <th>&nbsp</th>
+      <th>Language</th>
+      <th>Text</th>
+    </tr>
+  </thead>
+  <tbody>
  <%= f.fields_for :translations do |translation| %>
-    <div class="translations_fields">
-      <div class="field">
-        <%= translation.label :language %><br>
-        <%= translation.text_field :language %>
-      </div>
+    <tr>
+      <td>
+         +
+       </td>
+      <td>
+        <%= translation.select :language , Source.supported_languages %>
+      </td>
 
-      <div class="field">
-        <%= translation.label :text %><br>
+      <td>
         <%= translation.text_area :text , required: true%>
-       </div>
-    </div>
+       </td>
+    </tr>
  <% end %>
-
+  </tbody>
+</table>
   <div class="actions">
     <%= f.submit %>
   </div>
