@@ -1,3 +1,4 @@
+<h1> New Translation </h1>
 <%= form_for(@source) do |f| %>
   <% if @source.errors.any? %>
     <div id="error_explanation">
@@ -12,7 +13,7 @@
 
   <div class="field">
     <%= f.label :language %><br>
-    <%= f.select :language , Source.supported_languages %>
+    <%= f.select :language , Source.supported_languages ,{} ,{ :class=> "form-control" }%>
  </div>
 
  <div class="field">
@@ -23,7 +24,7 @@
 
  <div class="field">
     <%= f.label :text %><br>
-    <%= f.text_area :text , required: true%>
+    <%= f.text_area :text , required: true, :class => "form-control", rows: 3 %>
  </div>
 
 
@@ -43,11 +44,11 @@
          +
        </td>
       <td>
-        <%= translation.select :language , Source.supported_languages %>
+        <%= translation.select :language , Source.supported_languages,{} ,{ :class =>"form-control" } %>
       </td>
 
       <td>
-        <%= translation.text_area :text , required: true%>
+        <%= translation.text_area :text , required: true , :class => "form-control", rows: 3%>
        </td>
     </tr>
  <% end %>
