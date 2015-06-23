@@ -22,6 +22,7 @@ group :development, :test do
   gem 'fabrication'
   gem 'spring'
   gem 'rspec-rails'
+  gem 'capybara'
 end
 
 group :development do
