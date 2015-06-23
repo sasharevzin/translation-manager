@@ -12,7 +12,7 @@
 
   <div class="field">
     <%= f.label :language %><br>
-    <%= f.select :language , Source.supported_languages ,{} ,{ :class=> "form-control" }%>
+    <%= f.select :language , Source.supported_languages ,{} ,{ :class=> "form-control languageSelect" }%>
  </div>
 
  <div class="field">
@@ -45,7 +45,7 @@
          <a class='remove'>remove</a>
        </td>
       <td>
-        <%= translation.select :language , Source.supported_languages,{} ,{ :class =>"form-control" } %>
+        <%= translation.select :language , Source.supported_languages,{} ,{ :class =>"form-control languageSelect" } %>
       </td>
 
       <td>
