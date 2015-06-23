@@ -15,3 +15,22 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
+$(document).ready(function(){
+  $('#translationFields').on('click', '.addMore', function(){
+    var text = $("#translationFields tr:last").html();
+    var lastTranslationCount = $("#translationFields tr:last").data('translation-count');
+    var newTranslation = text.replaceAll(lastTranslationCount,lastTranslationCount+1);
+    $("#translationFields tbody").append('<tr>' + newTranslation + '</tr>');
+    $("#translationFields tr:last").attr('data-translation-count', lastTranslationCount+1);
+  });
+
+  $('#translationFields').on('click', '.remove', function(){
+    $(this).parent().parent().remove();
+  });
+});

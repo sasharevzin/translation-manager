@@ -28,7 +28,7 @@
 
 
  <h2>Translations</h2>
-<table class='table table-bordered'>
+<table id='translationFields' class='table table-bordered'>
   <thead>
     <tr>
       <th>&nbsp</th>
@@ -38,18 +38,21 @@
   </thead>
   <tbody>
  <%= f.fields_for :translations do |translation| %>
-    <tr>
+    <% count ||= 0 %>
+    <tr data-translation-count='<%= count%>'>
       <td>
-         +
+         <a class='addMore'>add more</a> |
+         <a class='remove'>remove</a>
        </td>
       <td>
         <%= translation.select :language , Source.supported_languages,{} ,{ :class =>"form-control" } %>
       </td>
 
       <td>
-        <%= translation.text_area :text , required: true , :class => "form-control", rows: 3%>
+        <%= translation.text_area :text , required: true , :class => "form-control", rows: 3 %>
        </td>
     </tr>
+    <% count += 1 %>
  <% end %>
   </tbody>
 </table>
