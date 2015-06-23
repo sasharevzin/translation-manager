@@ -26,4 +26,12 @@ RSpec.describe Source, type: :model do
     it { expect(subject).to allow_value("en-US").for(:language) }
   end
 
+  context 'locale validator' do
+    it 'returns error for abc as locale' do
+      source = Source.new(language: 'abc123')
+      source.save
+      expect(source.errors.full_messages).to include("Language is not valid ")
+    end
+  end
+
 end
