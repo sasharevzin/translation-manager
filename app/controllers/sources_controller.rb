@@ -41,6 +41,6 @@ class SourcesController < ApplicationController
   def source_params
     params.require(:source)
     .permit(:language, :text, :context,
-       translations_attributes: [:language, :text, :context ])
+       translations_attributes: [:language, :text, :context, :id, :source_id])
   end
 end
