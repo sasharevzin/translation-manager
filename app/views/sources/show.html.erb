@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Language:</strong>
+  <%= @source.language %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @source.text %>
+</p>
+
+<p>
+  <strong>Context:</strong>
+  <%= @source.context %>
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Language</th>
+      <th>Text</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @source.translations.each do |translation| %>
+      <tr>
+        <td><%= translation.language %></td>
+        <td><%= translation.text %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to 'Edit', edit_source_path(@source) %> |
+<%= link_to 'Back', sources_path %>
