@@ -13,8 +13,6 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'iso'
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 group :development, :test do
   gem 'byebug'
@@ -31,6 +29,7 @@ group :development do
   gem 'rubocop'
   gem 'puma'
   gem 'rubycritic'
+  gem 'capistrano-rails'
 end
 
 group :test do
