@@ -41,11 +41,6 @@ class SourcesController < ApplicationController
     @source = Source.find(params[:id])
   end
 
-  def search_params
-    params.permit(:language, :text)
-    params.select {|k, v| [:language, :text].include?(k)}
-  end
-
   def source_params
     params.require(:source)
       .permit(:language, :text, :context,
