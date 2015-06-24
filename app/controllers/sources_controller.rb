@@ -4,7 +4,7 @@ class SourcesController < ApplicationController
 
   def index
     @sources = Source.where("text LIKE ?", "%#{params[:text]}%")
-    @sources = @sources.where(language: params[:language]) if params[:language]
+    @sources = @sources.where(language: params[:language]) if params[:language].present?
     @sources.paginate(page: params[:page], per_page: params[:per_page])
   end
 
