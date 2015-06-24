@@ -3,8 +3,9 @@ class SourcesController < ApplicationController
   before_action :populate_source, only: [:edit, :show, :update, :destroy]
 
   def index
-    @sources = Source.includes(:translations)
-               .paginate(page: params[:page], per_page: params[:per_page])
+    @sources = Source.where("text LIKE ?", "%#{params[:text]}%")
+    @sources = @sources.where(language: params[:language]) if params[:language]
+    @sources.paginate(page: params[:page], per_page: params[:per_page])
   end
 
   def new
@@ -38,6 +39,11 @@ class SourcesController < ApplicationController
 
   def populate_source
     @source = Source.find(params[:id])
+  end
+
+  def search_params
+    params.permit(:language, :text)
+    params.select {|k, v| [:language, :text].include?(k)}
   end
 
   def source_params

@@ -1,5 +1,15 @@
 <h1>Listing Sources</h1>
 
+<p>
+<%= form_tag("/sources", method: "get") do %>
+  <%= label_tag(:text, "Language") %>
+  <%= select_tag :language , options_for_select(Source.supported_languages) %>
+  <%= label_tag(:text, "Text includes") %>
+  <%= text_field_tag(:text) %>
+  <%= submit_tag("Search") %> | <%= link_to 'reset search', root_path %>
+<% end %>
+</p>
+
 <table class='table table-bordered'>
   <thead>
     <tr>
