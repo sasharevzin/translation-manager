@@ -23,6 +23,8 @@ group :development, :test do
   gem 'spring'
   gem 'rspec-rails'
   gem 'capybara'
+  gem 'guard'
+  gem 'guard-rspec', require: false
 end
 
 group :development do
