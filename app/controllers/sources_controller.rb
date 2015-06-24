@@ -1,5 +1,6 @@
+# Sources controller to take care of CRUD operations
 class SourcesController < ApplicationController
-  before_action :get_source, only: [:edit, :show, :update, :destroy]
+  before_action :populate_source, only: [:edit, :show, :update, :destroy]
 
   def index
     @sources = Source.includes(:translations)
@@ -35,7 +36,7 @@ class SourcesController < ApplicationController
 
   private
 
-  def get_source
+  def populate_source
     @source = Source.find(params[:id])
   end
 
