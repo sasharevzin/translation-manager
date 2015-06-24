@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SourcesController, type: :controller do
-  let(:valid_attributes) {Fabricate.attributes_for(:source)}
+  let(:valid_attributes) { Fabricate.attributes_for(:source) }
 
   describe 'GET #index' do
     it 'assigns sources as @sources' do
@@ -20,7 +20,6 @@ RSpec.describe SourcesController, type: :controller do
       get :index
       expect(assigns(:sources).first.translations.first).to be_kind_of(Translation)
     end
-
   end
 
   describe 'GET #new' do
@@ -43,9 +42,9 @@ RSpec.describe SourcesController, type: :controller do
       end
 
       it 'changes the count of Source translations by one on successful creation' do
-        expect{
-            post :create, source: valid_attributes
-          }.to change{ Source.count}.by(1)
+        expect do
+          post :create, source: valid_attributes
+        end.to change { Source.count }.by(1)
       end
 
       it 'redirects to source translation page upon successful creation of source' do
@@ -57,32 +56,32 @@ RSpec.describe SourcesController, type: :controller do
     describe 'with invalid params' do
       describe 'source attributes' do
         it 'should raise exception if required params are not passed' do
-          expect{
+          expect do
             post :create
-          }.to raise_error(ActionController::ParameterMissing)
+          end.to raise_error(ActionController::ParameterMissing)
         end
 
         it 'assigns a newly created but unsaved source translation as @source' do
-          post :create, source: { language: 'zy', text: Faker::Lorem.paragraph}
+          post :create, source: { language: 'zy', text: Faker::Lorem.paragraph }
           expect(assigns(:source)).to be_a_new(Source)
         end
 
         it 're-renders new template' do
-          post :create, source: { language: 'zy', text: Faker::Lorem.paragraph}
+          post :create, source: { language: 'zy', text: Faker::Lorem.paragraph }
           expect(response).to render_template(:new)
         end
       end
 
       describe 'translations attributes' do
         let(:source_params) do
-          {  language:'en-US',
-               text: Faker::Lorem.paragraph,
-               translations_attributes:
+          {  language: 'en-US',
+             text: Faker::Lorem.paragraph,
+             translations_attributes:
                {
-                '0' => {
-                    text: Faker::Lorem.paragraph
-                  }
-              }
+                 '0' => {
+                   text: Faker::Lorem.paragraph
+                 }
+               }
             }
         end
 
@@ -145,9 +144,9 @@ RSpec.describe SourcesController, type: :controller do
     describe 'with invalid attributes' do
       it 'raises exception if given no params' do
         source = Fabricate(:source)
-        expect{
+        expect do
           patch :update, id: source.id
-          }.to raise_error(ActionController::ParameterMissing)
+        end.to raise_error(ActionController::ParameterMissing)
       end
 
       it 'assigns source to @source' do
@@ -171,11 +170,11 @@ RSpec.describe SourcesController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let!(:source) { Fabricate(:source)}
+    let!(:source) { Fabricate(:source) }
     it 'decreases the count by -1' do
-      expect{
+      expect do
         delete :destroy, id: source.id
-      }.to change(Source, :count).by(-1)
+      end.to change(Source, :count).by(-1)
     end
 
     it 'redirects to index page' do

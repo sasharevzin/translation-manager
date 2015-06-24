@@ -23,13 +23,13 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 
 var ready = function(){
-  $('.languageSelect').selectunique();
+  //$('.languageSelect').selectunique();
   $('#translationFields').on('click', '.addMore', function(){
     var text = $("#translationFields tr:last").html();
     var lastTranslationCount = $("#translationFields tr:last").data('translation-count');
     var newTranslation = text.replaceAll(lastTranslationCount,lastTranslationCount+1);
     $("#translationFields tbody").append('<tr>' + newTranslation + '</tr>');
-    $('.languageSelect').selectunique('refresh');
+    //$('.languageSelect').selectunique('refresh');
     $("#translationFields tr:last").data('translation-count', lastTranslationCount+1);
   });
 

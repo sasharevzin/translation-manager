@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
   resources :sources
-  root :to => 'sources#index'
+  root to: 'sources#index'
 end

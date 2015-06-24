@@ -29,6 +29,5 @@ RSpec.describe SourcesController, type: :routing do
     it 'routes to delete' do
       expect(delete: '/sources/1').to route_to('sources#destroy', id: '1')
     end
-
   end
 end

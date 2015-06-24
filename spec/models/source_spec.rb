@@ -22,16 +22,15 @@ RSpec.describe Source, type: :model do
   context 'validations' do
     it { expect(subject).to validate_presence_of(:text) }
     it { expect(subject).to validate_presence_of(:language) }
-    it { expect(subject).to_not allow_value("ab-XY").for(:language) }
-    it { expect(subject).to allow_value("en-US").for(:language) }
+    it { expect(subject).to_not allow_value('ab-XY').for(:language) }
+    it { expect(subject).to allow_value('en-US').for(:language) }
   end
 
   context 'locale validator' do
     it 'returns error for abc as locale' do
       source = Source.new(language: 'abc123')
       source.save
-      expect(source.errors.full_messages).to include("Language is not valid ")
+      expect(source.errors.full_messages).to include('Language is not valid ')
     end
   end
-
 end

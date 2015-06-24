@@ -3,7 +3,7 @@ class SourcesController < ApplicationController
 
   def index
     @sources = Source.includes(:translations)
-                .paginate(page: params[:page], per_page: params[:per_page])
+               .paginate(page: params[:page], per_page: params[:per_page])
   end
 
   def new
@@ -34,13 +34,14 @@ class SourcesController < ApplicationController
   end
 
   private
+
   def get_source
     @source = Source.find(params[:id])
   end
 
   def source_params
     params.require(:source)
-    .permit(:language, :text, :context,
-       translations_attributes: [:language, :text, :context, :id, :source_id])
+      .permit(:language, :text, :context,
+              translations_attributes: [:language, :text, :context, :id, :source_id])
   end
 end
