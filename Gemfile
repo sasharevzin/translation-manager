@@ -28,6 +28,7 @@ end
 group :development do
   gem 'rubocop'
   gem 'puma'
+  gem 'rubycritic'
 end
 
 group :test do
