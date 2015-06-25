@@ -50,5 +50,5 @@ test:
 production:
   <<: *default
   database: translations_production
-  username: translations
-  password: <%= ENV['TRANSLATIONS_DATABASE_PASSWORD'] %>
+  username: root
+  password:
