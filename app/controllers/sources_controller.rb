@@ -1,6 +1,7 @@
 # Sources controller to take care of CRUD operations
 class SourcesController < ApplicationController
   before_action :populate_source, only: [:edit, :show, :update, :destroy]
+  after_action :allow_iframe
 
   def index
     @sources = Source.where("text LIKE ?", "%#{params[:text]}%")
@@ -45,5 +46,9 @@ class SourcesController < ApplicationController
     params.require(:source)
       .permit(:language, :text, :context,
               translations_attributes: [:language, :text, :context, :id, :source_id])
+  end
+
+  def allow_iframe
+    response.headers.delete('X-Frame-Options')
   end
 end
