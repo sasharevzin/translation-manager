@@ -1,0 +1,12 @@
+/*
+  jquery-selectunique.js v0.1.0
+
+  Given a group of select fields with the same options, SelectUnique will remove an option from the
+  other select fields when it's selected, and put it back when it's changed.
+
+  Home: http://github.com/sshaw/jquery-selectunique
+  License (MIT): http://www.opensource.org/licenses/mit-license.php
+
+  Copyright (c) 2013 Skye Shaw
+*/
+!function(n){var t="selectunique",i=t+"-selected",e=function(i,e){var o=this;o.q=i.find("option").parent("select"),o.options=n.extend({},e),o.optionIndex={},o.q.on("change."+t,function(){o._selectChanged(n(this))}),n(o._uniqueOptions(o.q.find("option"))).each(function(){o.optionIndex[o._optionId(this)]=this.index}),o.q.has(":selected").each(function(){o._optionSelected(n(this))})};e.prototype={constructor:e,_selectChanged:function(t){var e=this,o=t.data(i);o&&e.q.not(t).each(function(){var t=n(this);t.append(e._cloneOption(o)),e._sortOptions(t)}),e._optionSelected(t)},_optionSelected:function(t){var e=this,o=t.find(":selected");e._ignoreOption(o)?t.data(i,null):(t.data(i,o),e.q.not(t).each(function(){var t=n(this);t.find("option").each(function(){var t=n(this);return o.text()==t.text()?void t.remove():void 0})}))},_ignoreOption:function(t){return""==n.trim(t.val())||n.isFunction(this.options.ignoreOption)&&this.options.ignoreOption(t)},_cloneOption:function(n){return n.clone(!0).prop("selected",!1)},_sortOptions:function(n){var t=this,i=n.find("option"),e=n.val();i.sort(function(n,i){return t.optionIndex[t._optionId(n)]-t.optionIndex[t._optionId(i)]}),n.html(i),n.val(e)},_optionId:function(n){return[n.value,n.text].join("-")},_uniqueOptions:function(t){var i=this,e=[],o={};return t.each(function(){var t=i._optionId(this);o[t]||i._ignoreOption(n(this))||(o[t]=!0,e.push(this))}),e},_removeHandlers:function(){this.q.off("."+t)},refresh:function(){},selected:function(){var t=this._uniqueOptions(this.q.find(":selected"));return n.map(t,function(n){return n.cloneNode(!0)})},remaining:function(){var t=this._uniqueOptions(this.q.find("option:not(:selected)"));return n.map(t,function(n){return n.cloneNode(!0)})}},n.fn.selectunique=function(i){if(this.has("select,option").length){var o=this.data(t);if(o||this.data(t,o=new e(this,i)),"string"==typeof i){if("refresh"!=i)return o[i]||n.error("selectunique: no such method '"+i+"'"),o[i]();o._removeHandlers(),this.data(t,o=new e(this))}}return this}}(window.jQuery);
