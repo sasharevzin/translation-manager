@@ -5,7 +5,7 @@ set :application, 'translations'
 set :repo_url, 'git@github.com:rgenerator/translations.git'
 
 # Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+set :branch, 'master'
 
 set :deploy_to, '/var/www/translations'
 
