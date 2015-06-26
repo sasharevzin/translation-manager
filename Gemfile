@@ -28,7 +28,6 @@ end
 
 group :development do
   gem 'rubocop'
-  gem 'puma'
   gem 'rubycritic'
   gem 'capistrano-rails'
 end
