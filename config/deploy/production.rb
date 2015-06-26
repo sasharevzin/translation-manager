@@ -8,20 +8,6 @@ server '50.17.205.211', user: 'deploy', roles: %w{app}
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 
- desc "Zero-downtime restart of Unicorn"
-  task :restart, :except => { :no_release => true } do
-    run "kill -s USR2 `cat #{current_path}/tmp/pids/unicorn.pid`"
-  end
-
-  desc "Start unicorn"
-  task :start, :except => { :no_release => true } do
-    run "cd #{current_path} ; bundle exec unicorn_rails -c config/unicorn.rb -D"
-  end
-
-  desc "Stop unicorn"
-  task :stop, :except => { :no_release => true } do
-    run "kill -s QUIT `cat #{current_path}/tmp/pids/unicorn.pid`"
-  end
 
 
 # Custom SSH Options

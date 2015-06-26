@@ -30,6 +30,7 @@ group :development do
   gem 'rubocop'
   gem 'rubycritic'
   gem 'capistrano-rails'
+  gem 'capistrano-bundler' # for capistrano/bundler
 end
 
 group :test do

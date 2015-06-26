@@ -335,6 +335,7 @@ DEPENDENCIES
   autoprefixer-rails
   bootstrap-sass (~> 3.3.1)
   byebug
+  capistrano-bundler
   capistrano-rails
   capybara
   coffee-rails (~> 4.1.0)
