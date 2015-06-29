@@ -13,6 +13,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'iso'
+gem 'unicorn'
 
 group :development, :test do
   gem 'byebug'
@@ -27,9 +28,9 @@ end
 
 group :development do
   gem 'rubocop'
-  gem 'puma'
   gem 'rubycritic'
   gem 'capistrano-rails'
+  gem 'capistrano-bundler' # for capistrano/bundler
 end
 
 group :test do
