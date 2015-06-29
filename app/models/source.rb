@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Source < ActiveRecord::Base
   has_many :translations, dependent: :destroy
   accepts_nested_attributes_for :translations
