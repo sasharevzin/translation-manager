@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150619145045) do
+ActiveRecord::Schema.define(version: 20150629192416) do
 
   create_table "sources", force: :cascade do |t|
     t.string   "language",   limit: 255
@@ -38,4 +38,5 @@ ActiveRecord::Schema.define(version: 20150619145045) do
   add_index "translations", ["source_id"], name: "index_translations_on_source_id", using: :btree
   add_index "translations", ["text"], name: "index_translations_on_text", length: {"text"=>100}, using: :btree
 
+  add_foreign_key "translations", "sources"
 end
