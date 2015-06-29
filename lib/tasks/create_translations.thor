@@ -21,11 +21,11 @@ class CreateTranslations < Thor
           languages.each do |lang|
             t = Translation.new
             t.language = lang.dup.gsub(/_/,'-')
-            t.text = row[lang] unless row[lang].empty?
+            t.text = row[lang]
             source.translations << t
-          end
-          
-        source.save!
+          end  
+          source.save!
+        
         rescue Exception => e
           puts "Source translations save was not Successful!"
           puts e
