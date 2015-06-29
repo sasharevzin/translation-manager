@@ -31,6 +31,7 @@ group :development do
   gem 'rubycritic'
   gem 'capistrano-rails'
   gem 'capistrano-bundler' # for capistrano/bundler
+  gem 'capistrano3-unicorn'
 end
 
 group :test do
