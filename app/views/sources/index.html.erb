@@ -1,5 +1,5 @@
 <h1>Listing Sources</h1>
-
+<%= tinymce %>
 <p>
 <%= form_tag("/sources", method: "get") do %>
   <%= label_tag(:text, "Language") %>
@@ -25,7 +25,7 @@
       <tr>
         <td><%= source.id %></td>
         <td><%= source.language %></td>
-        <td><%= source.text %></td>
+        <td><%= source.text.html_safe %></td>
         <td><%= link_to 'Show', source %></td>
         <td><%= link_to 'Edit', edit_source_path(source), 'data-no-turbolink' => 'true' %></td>
         <td><%= link_to 'Destroy', source, method: :delete, data: { confirm: 'Are you sure?' } %></td>

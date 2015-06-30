@@ -20,10 +20,10 @@
     <%= f.text_field :context %>
  </div>
 
-
+<%= tinymce %>
  <div class="field">
     <%= f.label :text %><br>
-    <%= f.text_area :text , required: true, :class => "form-control", rows: 3 %>
+    <%= f.text_area :text , class: "tinymce", rows: 3 %>
  </div>
 
 
@@ -49,7 +49,7 @@
       </td>
 
       <td>
-        <%= translation.text_area :text , required: true , :class => "form-control", rows: 3 %>
+        <%= translation.text_area :text ,  class: "tinymce", rows: 3 %>
        </td>
     </tr>
     <% count += 1 %>
