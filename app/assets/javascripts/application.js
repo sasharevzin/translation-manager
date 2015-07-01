@@ -25,12 +25,18 @@ String.prototype.replaceAll = function(search, replacement) {
 var ready = function(){
   $('.languageSelect').selectunique();
   $('#translationFields').on('click', '.addMore', function(){
+    $('#translationFields tr:last textarea.tinymce').each(function(input){
+      tinymce.execCommand("mceRemoveEditor", false, $(this).attr('id'));
+    })
     var text = $("#translationFields tr:last").html();
     var lastTranslationCount = $("#translationFields tr:last").data('translation-count');
     var newTranslation = text.replaceAll(lastTranslationCount,lastTranslationCount+1);
     $("#translationFields tbody").append('<tr>' + newTranslation + '</tr>');
     $('.languageSelect').selectunique('refresh');
     $("#translationFields tr:last").data('translation-count', lastTranslationCount+1);
+    $('#translationFields textarea').each(function(input){
+      tinymce.execCommand("mceAddEditor", false, $(this).attr('id'));
+    })
   });
 
   $('#translationFields').on('click', '.remove', function(){
