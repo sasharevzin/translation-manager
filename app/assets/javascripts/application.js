@@ -31,6 +31,22 @@ var checkMceEnabled = function(){
    return mceEnabledFlag;
 }
 
+var addMceEditor = function(){
+   $('#main').on('click','.enableEditor', function(){
+    $('textarea').each(function(){
+      tinymce.execCommand("mceAddEditor", false, $(this).attr('id'));
+    });
+   });
+}
+
+var removeMceEditor = function(){
+  $('#main').on('click','.removeEditor', function(){
+    $('textarea').each(function(){
+      tinymce.execCommand("mceRemoveEditor", false, $(this).attr('id'));
+    });
+  });
+}
+
 var addRow = function(){
     var text = $("#translationFields tr:last").html();
     var lastTranslationCount = $("#translationFields tr:last").data('translation-count');
@@ -58,6 +74,8 @@ var ready = function(){
     })
   });
   removeRow();
+  addMceEditor();
+  removeMceEditor();
 };
 
 $(document).ready(ready);
