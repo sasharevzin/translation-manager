@@ -31,29 +31,44 @@ var checkMceEnabled = function(){
    return mceEnabledFlag;
 }
 
-var addMceEditor = function(){
-   $('#main').on('click','.enableEditor', function(){
-    $('textarea').each(function(){
-      tinymce.execCommand("mceAddEditor", false, $(this).attr('id'));
-    });
-   });
+var removeEditor = function(){
+  $('#main').on('click','.removeEditor', function(){
+    $('textarea').each(function(idx){
+       tinymce.execCommand("mceRemoveEditor", false, $(this).attr('id'));
+     });
+  });
 }
 
-var removeMceEditor = function(){
-  $('#main').on('click','.removeEditor', function(){
-    $('textarea').each(function(){
-      tinymce.execCommand("mceRemoveEditor", false, $(this).attr('id'));
-    });
+var addEditor = function(){
+  $('#main').on('click','.enableEditor', function(){
+    $('textarea').each(function(idx){
+          tinymce.execCommand("mceAddEditor", false, $(this).attr('id'));
+     });
   });
 }
 
 var addRow = function(){
-    var text = $("#translationFields tr:last").html();
-    var lastTranslationCount = $("#translationFields tr:last").data('translation-count');
-    var newTranslation = text.replaceAll(lastTranslationCount,lastTranslationCount+1);
-    $("#translationFields tbody").append('<tr>' + newTranslation + '</tr>');
+    var lastRow = $("#translationFields tr:last").clone();
+    var tinymceDiv = lastRow.find('.mce-tinymce').remove();
+    var lastTranslationCount = lastRow.data('translation-count');
+    var selectBox = lastRow.find('td select')
+    selectBox.attr('name', 'source[translations_attributes]['+ (lastTranslationCount+1)+'][language]')
+    selectBox.attr('id', 'source_translations_attributes_'+ (lastTranslationCount+1)+'_language')
+
+    var textArea = lastRow.find('td textarea')
+    textArea.attr('name', 'source[translations_attributes]['+ (lastTranslationCount+1)+'][text]')
+    textArea.attr('id', 'source_translations_attributes_'+ (lastTranslationCount+1)+'_text')
+    //textArea.show();
+    tinymce.execCommand("mceAddEditor", false, textArea.attr('id'));
+    lastRow.attr('data-translation-count', (lastTranslationCount+1));
+
+    $("#translationFields tbody").append(lastRow);
+    //if(tinymceDiv[0] != null)
+    //  {
+        addEditor();
+    //  }
     $('.languageSelect').selectunique('refresh');
-    $("#translationFields tr:last").data('translation-count', lastTranslationCount+1);
+
 }
 
 var removeRow = function(){
@@ -62,20 +77,23 @@ var removeRow = function(){
   });
 }
 var ready = function(){
+
   $('.languageSelect').selectunique();
+
   $('#translationFields').on('click', '.addMore', function(){
     mceEnabled = checkMceEnabled();
     addRow();
-    $('#translationFields textarea').each(function(input){
+    console.log('addin row successful');
+    /*$('#translationFields textarea').each(function(input){
       if(mceEnabled)
         {
           tinymce.execCommand("mceAddEditor", false, $(this).attr('id'));
         }
-    })
+    })*/
   });
+
   removeRow();
-  addMceEditor();
-  removeMceEditor();
+  addEditor();
 };
 
 $(document).ready(ready);
