@@ -5,7 +5,7 @@
 
 <p>
   <strong>Text:</strong>
-  <%= @source.text %>
+  <%= @source.text.html_safe %>
 </p>
 
 <p>
@@ -25,7 +25,7 @@
     <% @source.translations.each do |translation| %>
       <tr>
         <td><%= translation.language %></td>
-        <td><%= translation.text %></td>
+        <td><%= translation.text.html_safe %></td>
       </tr>
     <% end %>
   </tbody>
