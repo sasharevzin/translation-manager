@@ -12,4 +12,5 @@
 !/log/.keep
 /tmp
 coverage/
-config/*.yml
+/config/database.yml
+/config/secret.yml
