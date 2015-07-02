@@ -58,15 +58,13 @@ var addRow = function(){
     var textArea = lastRow.find('td textarea')
     textArea.attr('name', 'source[translations_attributes]['+ (lastTranslationCount+1)+'][text]')
     textArea.attr('id', 'source_translations_attributes_'+ (lastTranslationCount+1)+'_text')
-    //textArea.show();
-    tinymce.execCommand("mceAddEditor", false, textArea.attr('id'));
+    textArea.show();
     lastRow.attr('data-translation-count', (lastTranslationCount+1));
-
     $("#translationFields tbody").append(lastRow);
-    //if(tinymceDiv[0] != null)
-    //  {
-        addEditor();
-    //  }
+    if (tinymceDiv[0] != null)
+      {
+        tinymce.execCommand("mceAddEditor", false, textArea.attr('id'));
+      }
     $('.languageSelect').selectunique('refresh');
 
 }
@@ -74,6 +72,7 @@ var addRow = function(){
 var removeRow = function(){
   $('#translationFields').on('click', '.remove', function(){
     $(this).parent().parent().remove();
+     $('.languageSelect').selectunique('refresh');
   });
 }
 var ready = function(){
@@ -83,17 +82,11 @@ var ready = function(){
   $('#translationFields').on('click', '.addMore', function(){
     mceEnabled = checkMceEnabled();
     addRow();
-    console.log('addin row successful');
-    /*$('#translationFields textarea').each(function(input){
-      if(mceEnabled)
-        {
-          tinymce.execCommand("mceAddEditor", false, $(this).attr('id'));
-        }
-    })*/
   });
 
   removeRow();
   addEditor();
+  removeEditor();
 };
 
 $(document).ready(ready);
