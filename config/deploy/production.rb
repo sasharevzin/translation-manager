@@ -1,4 +1,4 @@
-server '50.17.205.211', user: 'deploy', roles: %w{app db web}
+server 'translation.myplaydirect.com', user: 'deploy', roles: %w{app db web}
 
 # Configuration
 # =============
