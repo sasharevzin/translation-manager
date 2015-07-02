@@ -32,7 +32,7 @@ var checkMceEnabled = function(){
 }
 
 var removeEditor = function(){
-  $('#main').on('click','.removeEditor', function(){
+  $('.main').on('click','.removeEditor', function(){
     $('textarea').each(function(idx){
        tinymce.execCommand("mceRemoveEditor", false, $(this).attr('id'));
      });
@@ -40,7 +40,7 @@ var removeEditor = function(){
 }
 
 var addEditor = function(){
-  $('#main').on('click','.enableEditor', function(){
+  $('.main').on('click','.enableEditor', function(){
     $('textarea').each(function(idx){
           tinymce.execCommand("mceAddEditor", false, $(this).attr('id'));
      });
