@@ -39,8 +39,7 @@
   </thead>
   <tbody>
  <%= f.fields_for :translations do |translation| %>
-    <% count ||= 0 %>
-    <tr data-translation-count='<%=count%>'>
+    <tr>
       <td>
          <a class='addMore'>add more</a> |
          <a class='remove'>remove</a>

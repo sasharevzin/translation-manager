@@ -68,7 +68,6 @@ var addRow = function(numberTranslations){
       }
     $('.languageSelect').selectunique('refresh');
     return numberTranslations;
-
 }
 
 var removeRow = function(){
