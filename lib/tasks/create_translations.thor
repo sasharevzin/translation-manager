@@ -10,12 +10,20 @@ class CreateTranslations < Thor
         source_language = languages.shift
         source = Source.new
         source.language = source_language.gsub(/_/,'-')
-        source.text = "<p>#{row[source_language]}</p>"
+        if /[\r\n]/.match(row[source_language])
+          source.text = "<p>#{row[source_language].strip.gsub(/[\r\n]+/, '</p><p>')}</p>"
+        else
+          source.text = row[source_language]
+        end
         
         languages.each do |lang|
           t = Translation.new
           t.language = lang.dup.gsub(/_/,'-')
-          t.text = "<p>#{row[lang]}</p>"
+          if /[\r\n]/.match(row[lang])
+            t.text = "<p>#{row[lang].strip.gsub(/[\r\n]+/, '</p><p>')}</p>"
+          else
+            t.text = row[lang]
+          end 
           source.translations << t
         end  
         source.save!
