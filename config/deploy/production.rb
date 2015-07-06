@@ -1,5 +1,12 @@
 server 'translation.myplaydirect.com', user: 'deploy', roles: %w{app db web}
 
+after 'deploy:publishing', 'deploy:restart'
+namespace :deploy do
+  task :restart do
+    invoke 'unicorn:restart'
+  end
+end
+
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb
