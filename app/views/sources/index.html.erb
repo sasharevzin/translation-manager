@@ -1,14 +1,16 @@
 <h1>Listing Sources</h1>
 <%= tinymce %>
-<p>
 <%= form_tag("/sources", method: "get") do %>
-  <%= label_tag(:text, "Language") %>
-  <%= select_tag :language , options_for_select(Source.supported_languages,
-                                  selected: params[:language] ||'en-US') %>
-  <%= text_field_tag(:text, params[:text] ,placeholder: "Text to search") %>
-  <%= submit_tag("Search") %> | <%= link_to 'reset search', root_path %>
+  <p>  
+    <%= label_tag(:text, "Language") %>
+    <%= select_tag :language , options_for_select(Source.supported_languages,
+                                selected: params[:language] ||'en-US') %>
+    <%= text_area_tag(:text, params[:text] ,placeholder: "Text to search", class: 'form-control') %>
+  </p>  
+  <p>  
+    <%= submit_tag("Search") %> | <%= link_to 'reset search', root_path %>
+  </p>
 <% end %>
-</p>
 
 <table class='table table-bordered'>
   <thead>
