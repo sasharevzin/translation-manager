@@ -12,19 +12,19 @@
 
   <div class="field">
     <%= f.label :language %><br>
-    <%= f.select :language , Source.supported_languages ,{} ,{ :class=> "form-control languageSelect" }%>
+    <%= f.select :language , Source.supported_languages ,{} ,{ class: "form-control languageSelect" }%>
  </div>
 
  <div class="field">
    <%= f.label :context %> <br>
-    <%= f.text_field :context %>
+   <%= f.text_field :context, class: 'form-control'%>
  </div>
 
 <%= tinymce %>
  <div class="field">
    <%= f.label :text %><br>
    <%= link_to 'enable editor','#', class: 'enableEditor'%> | <%= link_to 'disable editor','#', class: 'removeEditor'%><br />
-    <%= f.text_area :text,rows: 3 %>
+    <%= f.text_area :text,rows: 3, class: 'form-control' %>
  </div>
 
 
@@ -49,7 +49,7 @@
       </td>
 
       <td>
-        <%= translation.text_area :text, rows: 3 %>
+        <%= translation.text_area :text, rows: 3, class: 'form-control' %>
        </td>
     </tr>
  <% end %>
