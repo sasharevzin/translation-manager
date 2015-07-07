@@ -1,4 +1,4 @@
-server 'translabs.myplaydirect.com', user: 'deploy', roles: %w(app db web)
+server 'translation.labs.myplaydirect.com', user: 'deploy', roles: %w(app db web)
 
 after 'deploy:publishing', 'deploy:restart'
 namespace :deploy do
