@@ -12,31 +12,30 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20150629192416) do
-
-  create_table "sources", force: :cascade do |t|
-    t.string   "language",   limit: 255
-    t.text     "text",       limit: 65535
-    t.string   "context",    limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+  create_table 'sources', force: :cascade do |t|
+    t.string 'language',   limit: 255
+    t.text 'text',       limit: 65535
+    t.string 'context',    limit: 255
+    t.datetime 'created_at',               null: false
+    t.datetime 'updated_at',               null: false
   end
 
-  add_index "sources", ["context"], name: "index_sources_on_context", using: :btree
-  add_index "sources", ["language"], name: "index_sources_on_language", using: :btree
-  add_index "sources", ["text"], name: "index_sources_on_text", length: {"text"=>100}, using: :btree
+  add_index 'sources', ['context'], name: 'index_sources_on_context', using: :btree
+  add_index 'sources', ['language'], name: 'index_sources_on_language', using: :btree
+  add_index 'sources', ['text'], name: 'index_sources_on_text', length: { 'text' => 100 }, using: :btree
 
-  create_table "translations", force: :cascade do |t|
-    t.integer  "source_id",  limit: 4
-    t.string   "language",   limit: 255
-    t.string   "context",    limit: 255
-    t.text     "text",       limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+  create_table 'translations', force: :cascade do |t|
+    t.integer 'source_id',  limit: 4
+    t.string 'language',   limit: 255
+    t.string 'context',    limit: 255
+    t.text 'text',       limit: 65535
+    t.datetime 'created_at',               null: false
+    t.datetime 'updated_at',               null: false
   end
 
-  add_index "translations", ["language"], name: "index_translations_on_language", using: :btree
-  add_index "translations", ["source_id"], name: "index_translations_on_source_id", using: :btree
-  add_index "translations", ["text"], name: "index_translations_on_text", length: {"text"=>100}, using: :btree
+  add_index 'translations', ['language'], name: 'index_translations_on_language', using: :btree
+  add_index 'translations', ['source_id'], name: 'index_translations_on_source_id', using: :btree
+  add_index 'translations', ['text'], name: 'index_translations_on_text', length: { 'text' => 100 }, using: :btree
 
-  add_foreign_key "translations", "sources"
+  add_foreign_key 'translations', 'sources'
 end

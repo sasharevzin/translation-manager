@@ -1,4 +1,4 @@
-server 'translation.myplaydirect.com', user: 'deploy', roles: %w{app db web}
+server 'translation.myplaydirect.com', user: 'deploy', roles: %w(app db web)
 
 after 'deploy:publishing', 'deploy:restart'
 namespace :deploy do
@@ -14,8 +14,6 @@ end
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
-
 
 # Custom SSH Options
 # ==================
