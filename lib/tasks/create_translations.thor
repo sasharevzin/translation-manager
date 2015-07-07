@@ -11,7 +11,7 @@ class CreateTranslations < Thor
         source = Source.new
         source.language = source_language.gsub(/_/,'-')
         if /[\r\n]/.match(row[source_language])
-          source.text = "<p>#{row[source_language].strip.gsub(/[\r\n]{2,}/, '</p><p>').gsub(/[\r\n]/, '<br>')}</p>"
+          source.text = "<p>#{row[source_language].strip.gsub(/[\r\n]{2,}/, '</p><p>')}</p>"
         else
           source.text = row[source_language]
         end
@@ -20,7 +20,7 @@ class CreateTranslations < Thor
           t = Translation.new
           t.language = lang.dup.gsub(/_/,'-')
           if /[\r\n]/.match(row[lang])
-            t.text = "<p>#{row[lang].strip.gsub(/[\r\n]{2,}/, '</p><p>').gsub(/[\r\n]/, '<br>')}</p>"
+            t.text = "<p>#{row[lang].strip.gsub(/[\r\n]{2,}/, '</p><p>')}</p>"
           else
             t.text = row[lang]
           end 
@@ -30,3 +30,4 @@ class CreateTranslations < Thor
       end
   end
 end
+
