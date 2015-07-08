@@ -4,7 +4,7 @@
   <p>  
     <%= label_tag(:text, "Language") %>
     <%= select_tag :language , options_for_select(Source.supported_languages,
-                                selected: params[:language] ||'en-US') %>
+                                selected: params[:language] ||'en') %>
     <%= text_area_tag(:text, params[:text] ,placeholder: "Text to search", class: 'form-control') %>
   </p>  
   <p>  
