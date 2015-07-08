@@ -1,4 +1,4 @@
-<h1>Listing Sources</h1>
+<% unless @sources.empty?%><h1>Listing Sources</h1><% end %>
 <%= tinymce %>
 <%= form_tag("/sources", method: "get") do %>
   <p>  
