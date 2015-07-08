@@ -7,6 +7,6 @@ class Source < ActiveRecord::Base
   validates :language, presence: true, locale: true
 
   def self.supported_languages
-    %w(en de-DE en-GB en-US es-ES fr-FR it-IT nb-NO nl-NL pt-PT)
+    %w(en cs da de el es fi fr it nl no pl pt sv tr)
   end
 end
