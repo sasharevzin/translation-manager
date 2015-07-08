@@ -16,7 +16,7 @@ timeout 30
 listen '/var/www/translations/current/tmp/sockets/unicorn.sock', backlog: 2048
 stderr_path '/var/www/translations/current/log/unicorn.stderr.log'
 stdout_path '/var/www/translations/current/log/unicorn.stdout.lgo'
-
+pid '/var/www/translations/shared/tmp/pids/unicorn.pid'
 ##
 
 # http://www.rubyenterpriseedition.com/faq.html#adapt_apps_for_cow
