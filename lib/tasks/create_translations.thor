@@ -27,7 +27,7 @@ class CreateTranslations < Thor
       end
       unless source.save
         puts "#{row.inspect} is not being saved"
-        puts source.errors.to_sentence
+        puts source.errors.to_sentence        
       end
     end
   end
