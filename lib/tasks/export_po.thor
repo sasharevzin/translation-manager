@@ -31,15 +31,45 @@ class ExportPo < Thor
       file.close
     end
 
+    def get_source_text_to_write(idx, text, ary_length)
+      str = "msgid: \"#{text}\" \n"
+      str = "msgid: \"#{text + '\n'}\" \n" if ary_length > 1
+      str.gsub!('msgid:','') if idx > 0
+      str
+    end
+
+    def get_translation_text_to_write(idx, text, ary_length)
+      str = "msgstr: \"#{text}\" \n"
+      str = "msgstr: \"#{text + '\n'}\" \n" if ary_length > 1
+      str.gsub!('msgstr:','') if idx > 0
+      str  << "\n" if idx + 1  == ary_length
+      str
+    end
+
+
     def search_and_write_file(file, language)
       Source.includes(:translations)
         .where('translations.language = ?', language)
         .references(:translations)
         .find_each do |source|
-        translation = source.translations.find_by(language: language)
-        next unless translation
-        file.write("msgid: \"#{source.text}\" \n")
-        file.write("msgstr: \"#{translation.text}\" \n\n")
+          translation = source.translations.find_by(language: language)
+          next unless translation
+
+          source_text = source.text.dup
+          source_text_ary = source_text.split("\n")
+
+          source_text_ary.each_with_index do |l, idx|
+             l.gsub!("\r",'')
+            file.write(get_source_text_to_write(idx, l, source_text_ary.length))
+          end
+
+          translation_text = translation.text.dup
+          translation_text_ary = translation_text.split("\n")
+
+          translation_text_ary.each_with_index do |l, idx|
+            l.gsub!("\r",'')
+            file.write(get_translation_text_to_write(idx, l, translation_text_ary.length))
+          end
       end
     end
   end
