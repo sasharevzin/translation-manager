@@ -32,16 +32,16 @@ class ExportPo < Thor
     end
 
     def get_source_text_to_write(idx, text, ary_length)
-      str = "msgid: \"#{text}\" \n"
-      str = "msgid: \"#{text + '\n'}\" \n" if ary_length > 1
-      str.gsub!('msgid:','') if idx > 0
+      str = "msgid \"#{text}\" \n"
+      str = "msgid \"#{text + '\n'}\" \n" if(ary_length > 1 && idx+1 < ary_length)
+      str.gsub!('msgid','') if idx > 0
       str
     end
 
     def get_translation_text_to_write(idx, text, ary_length)
-      str = "msgstr: \"#{text}\" \n"
-      str = "msgstr: \"#{text + '\n'}\" \n" if ary_length > 1
-      str.gsub!('msgstr:','') if idx > 0
+      str = "msgstr \"#{text}\" \n"
+      str = "msgstr \"#{text + '\n'}\" \n" if(ary_length > 1 && idx+1 < ary_length)
+      str.gsub!('msgstr','') if idx > 0
       str  << "\n" if idx + 1  == ary_length
       str
     end
