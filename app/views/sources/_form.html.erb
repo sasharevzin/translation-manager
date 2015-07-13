@@ -38,8 +38,9 @@
     </tr>
   </thead>
   <tbody>
+  <% num ||= 1 %>
  <%= f.fields_for :translations do |translation| %>
-    <tr>
+   <tr data-translation-number="<%=num%>">
       <td>
          <a class='addMore'>add more</a> |
          <a class='remove'>remove</a>
@@ -51,7 +52,8 @@
       <td>
         <%= translation.text_area :text, rows: 3, class: 'form-control' %>
        </td>
-    </tr>
+     </tr>
+     <% num +=1 %>
  <% end %>
   </tbody>
 </table>

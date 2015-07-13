@@ -47,19 +47,21 @@ var addEditor = function(){
   });
 }
 
-var addRow = function(numberTranslations){
+var addRow = function(){
     var lastRow = $("#translationFields tr:last").clone();
     var tinymceDiv = lastRow.find('.mce-tinymce').remove();
-    var lastTranslationCount = numberTranslations;
-    var selectBox = lastRow.find('td select')
-    selectBox.attr('name', 'source[translations_attributes]['+ (lastTranslationCount+1)+'][language]')
-    selectBox.attr('id', 'source_translations_attributes_'+ (lastTranslationCount+1)+'_language')
+    var lastTranslationCount =  lastRow.data('translation-number');
+    lastTranslationCount += 1;
 
-    var textArea = lastRow.find('td textarea')
-    textArea.attr('name', 'source[translations_attributes]['+ (lastTranslationCount+1)+'][text]')
-    textArea.attr('id', 'source_translations_attributes_'+ (lastTranslationCount+1)+'_text')
+    lastRow.attr('data-translation-number', lastTranslationCount);
+    var selectBox = lastRow.find('td select');
+    selectBox.attr('name', 'source[translations_attributes]['+ (lastTranslationCount+1)+'][language]');
+    selectBox.attr('id', 'source_translations_attributes_'+ (lastTranslationCount+1)+'_language');
+
+    var textArea = lastRow.find('td textarea');
+    textArea.attr('name', 'source[translations_attributes]['+ (lastTranslationCount+1)+'][text]');
+    textArea.attr('id', 'source_translations_attributes_'+ (lastTranslationCount+1)+'_text');
     textArea.show();
-    numberTranslations += 1;
 
     $("#translationFields tbody").append(lastRow);
     if (tinymceDiv[0] != null)
@@ -67,7 +69,6 @@ var addRow = function(numberTranslations){
         tinymce.execCommand("mceAddEditor", false, textArea.attr('id'));
       }
     $('.languageSelect').selectunique('refresh');
-    return numberTranslations;
 }
 
 var removeRow = function(){
@@ -82,7 +83,7 @@ var ready = function(){
   numberTranslations = 0;
   $('#translationFields').on('click', '.addMore', function(){
     mceEnabled = checkMceEnabled();
-    numberTranslations = addRow(numberTranslations);
+    addRow();
   });
 
   removeRow();
