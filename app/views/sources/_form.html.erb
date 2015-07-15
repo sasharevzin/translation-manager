@@ -42,7 +42,6 @@
  <%= f.fields_for :translations do |translation| %>
    <tr data-translation-number="<%=num%>">
       <td>
-         <a class='addMore'>add more</a> |
          <a class='remove'>remove</a>
        </td>
       <td>
@@ -58,6 +57,7 @@
   </tbody>
 </table>
   <div class="actions">
+    <a class='addMore'>add more</a>
     <%= f.submit %>
   </div>
 <% end %>
