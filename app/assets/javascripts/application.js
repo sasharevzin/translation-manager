@@ -48,7 +48,7 @@ var addEditor = function(){
 }
 
 var addRow = function(){
-    var lastRow = $("#translationFields tr:last").clone();
+    var lastRow = $("#translationFields tbody tr:last").clone();
     var tinymceDiv = lastRow.find('.mce-tinymce').remove();
     var lastTranslationCount =  lastRow.data('translation-number');
     lastTranslationCount += 1;
