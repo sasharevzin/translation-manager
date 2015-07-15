@@ -29,6 +29,7 @@
 
 
  <h2>Translations</h2>
+ <h4><a class='addMore' style='cursor: pointer;'>Add more translations</a></h4>
 <table id='translationFields' class='table table-bordered'>
   <thead>
     <tr>
@@ -41,9 +42,9 @@
   <% num ||= 1 %>
  <%= f.fields_for :translations do |translation| %>
    <tr data-translation-number="<%=num%>">
-      <td>
-         <a class='remove'>remove</a>
-       </td>
+     <td>
+       <a class='remove' style='cursor: pointer;'>remove</a>
+     </td>
       <td>
         <%= translation.select :language , Source.supported_languages,{} ,{ :class =>"form-control languageSelect" } %>
       </td>
@@ -57,7 +58,6 @@
   </tbody>
 </table>
   <div class="actions">
-    <a class='addMore'>add more</a>
     <%= f.submit %>
   </div>
 <% end %>

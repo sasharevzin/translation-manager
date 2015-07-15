@@ -58,7 +58,7 @@ var addRow = function(){
     selectBox.attr('name', 'source[translations_attributes]['+ (lastTranslationCount+1)+'][language]');
     selectBox.attr('id', 'source_translations_attributes_'+ (lastTranslationCount+1)+'_language');
 
-    var textArea = lastRow.find('td textarea');
+    var textArea = lastRow.find('td textarea').val('');
     textArea.attr('name', 'source[translations_attributes]['+ (lastTranslationCount+1)+'][text]');
     textArea.attr('id', 'source_translations_attributes_'+ (lastTranslationCount+1)+'_text');
     textArea.show();
@@ -81,7 +81,7 @@ var ready = function(){
 
   $('.languageSelect').selectunique();
   numberTranslations = 0;
-  $('#translationFields').on('click', '.addMore', function(){
+  $('.addMore').click(function(){
     mceEnabled = checkMceEnabled();
     addRow();
   });
