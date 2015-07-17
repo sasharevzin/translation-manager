@@ -4,13 +4,15 @@
 class ExportPo < Thor
   require_relative '../../config/environment.rb'
   require_relative '../unsupported_language_error'
-  desc 'for <language>',
-       "export PO file for the given language. Supported languages are #{Source.supported_languages.join(', ')}"
-  def for(language)
-    check_language(language)
-    file = generate_file_with_comments(language)
-    search_and_write_file(file, language)
-    close_file_with_comments(file, language)
+  desc 'for <languages>',
+       "export PO file for the given language. Supported languages are #{Source.supported_languages.to_sentence}"
+  def for(*languages)
+    languages.each do |language|
+      check_language(language)
+      file = generate_file_with_comments(language)
+      search_and_write_file(file, language)
+      close_file_with_comments(file, language)
+    end
   end
 
   no_tasks do
