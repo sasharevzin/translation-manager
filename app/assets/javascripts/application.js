@@ -73,8 +73,19 @@ var addRow = function(){
 
 var removeRow = function(){
   $('#translationFields').on('click', '.remove', function(){
+    // TODO Need to add Confirm/Canel button and conditions here.
+    alert('Are you sure you want to delete this translation?');
+    $.ajax({
+      url: '/translations/' + $(this).parent().parent().prev('input').val(),
+       type: 'DELETE',
+       success: function(response) {
+         // TODO Add success action here.
+         alert('Success!!!');
+       }
+    });
+     //alert($(this).parent().parent().prev('input').val());
     $(this).parent().parent().remove();
-     $('.languageSelect').selectunique('refresh');
+      $('.languageSelect').selectunique('refresh');
   });
 }
 var ready = function(){
