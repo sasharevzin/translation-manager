@@ -13,20 +13,19 @@ preload_app true
 timeout 30
 
 # Listen on a Unix data socket
-listen '/var/www/translations/current/tmp/sockets/unicorn.sock', :backlog => 2048
-stderr_path "/var/www/translations/current/log/unicorn.stderr.log"
-stdout_path "/var/www/translations/current/log/unicorn.stdout.lgo"
+listen '/var/www/translations/current/tmp/sockets/unicorn.sock', backlog: 2048
+stderr_path '/var/www/translations/current/log/unicorn.stderr.log'
+stdout_path '/var/www/translations/current/log/unicorn.stdout.lgo'
+pid '/var/www/translations/current/tmp/pids/unicorn.pid'
 
 ##
-# REE
 
 # http://www.rubyenterpriseedition.com/faq.html#adapt_apps_for_cow
 if GC.respond_to?(:copy_on_write_friendly=)
   GC.copy_on_write_friendly = true
 end
 
-
-before_fork do |server, worker|
+before_fork do |server, _worker|
   ##
   # When sent a USR2, Unicorn will suffix its pidfile with .oldbin and
   # immediately start loading up a new version of itself (loaded with a new
@@ -39,15 +38,15 @@ before_fork do |server, worker|
   # Using this method we get 0 downtime deploys.
 
   old_pid = Rails.root + '/tmp/pids/unicorn.pid.oldbin'
-  if File.exists?(old_pid) && server.pid != old_pid
+  if File.exist?(old_pid) && server.pid != old_pid
     begin
-      Process.kill("QUIT", File.read(old_pid).to_i)
+      Process.kill('QUIT', File.read(old_pid).to_i)
     rescue Errno::ENOENT, Errno::ESRCH
       # someone else did our job for us
     end
   end
 end
 
-after_fork do |server, worker|
+after_fork do |_server, _worker|
   ActiveRecord::Base.establish_connection
 end

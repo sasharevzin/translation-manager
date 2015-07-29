@@ -1,4 +1,11 @@
-server '50.17.205.211', user: 'deploy', roles: %w{app}
+server 'translation.myplaydirect.com', user: 'deploy', roles: %w(app db web)
+
+after 'deploy:publishing', 'deploy:restart'
+namespace :deploy do
+  task :restart do
+    invoke 'unicorn:restart'
+  end
+end
 
 # Configuration
 # =============
@@ -7,8 +14,6 @@ server '50.17.205.211', user: 'deploy', roles: %w{app}
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
-
 
 # Custom SSH Options
 # ==================

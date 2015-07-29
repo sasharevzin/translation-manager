@@ -14,6 +14,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'iso'
 gem 'unicorn'
+gem 'tinymce-rails'
+gem 'redis'
 
 group :development, :test do
   gem 'byebug'
@@ -31,6 +33,7 @@ group :development do
   gem 'rubycritic'
   gem 'capistrano-rails'
   gem 'capistrano-bundler' # for capistrano/bundler
+  gem 'capistrano3-unicorn'
 end
 
 group :test do

@@ -1,14 +1,16 @@
-<h1>Listing Sources</h1>
-
-<p>
+<% unless @sources.empty?%><h1>Listing Sources</h1><% end %>
+<%= tinymce %>
 <%= form_tag("/sources", method: "get") do %>
-  <%= label_tag(:text, "Language") %>
-  <%= select_tag :language , options_for_select(Source.supported_languages,
-                                  selected: params[:language] ||'en-US') %>
-  <%= text_field_tag(:text, params[:text] ,placeholder: "Text to search") %>
-  <%= submit_tag("Search") %> | <%= link_to 'reset search', root_path %>
+  <p>  
+    <%= label_tag(:text, "Language") %>
+    <%= select_tag :language , options_for_select(Source.supported_languages,
+                                selected: params[:language] ||'en') %>
+    <%= text_area_tag(:text, params[:text] ,placeholder: "Text to search", class: 'form-control') %>
+  </p>  
+  <p>  
+    <%= submit_tag("Search") %> | <%= link_to 'reset search', root_path %>
+  </p>
 <% end %>
-</p>
 
 <table class='table table-bordered'>
   <thead>
@@ -25,7 +27,7 @@
       <tr>
         <td><%= source.id %></td>
         <td><%= source.language %></td>
-        <td><%= source.text %></td>
+        <td><%= source.text.html_safe %></td>
         <td><%= link_to 'Show', source %></td>
         <td><%= link_to 'Edit', edit_source_path(source), 'data-no-turbolink' => 'true' %></td>
         <td><%= link_to 'Destroy', source, method: :delete, data: { confirm: 'Are you sure?' } %></td>

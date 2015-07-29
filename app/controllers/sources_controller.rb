@@ -4,9 +4,10 @@ class SourcesController < ApplicationController
   after_action :allow_iframe
 
   def index
-    @sources = Source.where("text LIKE ?", "%#{params[:text]}%")
+    @sources = Source.where('text LIKE ?', "%#{params[:text]}%")
     @sources = @sources.where(language: params[:language]) if params[:language].present?
     @sources.paginate(page: params[:page], per_page: params[:per_page])
+    flash.now[:alert] = 'No results found with given search criteria' if @sources.empty?
   end
 
   def new
