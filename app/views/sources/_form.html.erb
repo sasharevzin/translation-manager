@@ -3,59 +3,61 @@
     <div id="error_explanation">
       <h2><%= pluralize(@source.errors.count, "error") %> prohibited this source translation from being saved:</h2>
       <ul>
-      <% @source.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+	<% @source.errors.full_messages.each do |message| %>
+	  <li><%= message %></li>
+	<% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="field">
     <%= f.label :language %><br>
-    <%= f.select :language , Source.supported_languages ,{} ,{ :class=> "form-control languageSelect" }%>
- </div>
+    <%= f.select :language , Source.supported_languages ,{} ,{ class: "form-control languageSelect" }%>
+  </div>
 
- <div class="field">
-    <%= f.label :context %><br>
-    <%= f.text_field :context %>
- </div>
+  <div class="field">
+    <%= f.label :context %> <br>
+    <%= f.text_field :context, class: 'form-control'%>
+  </div>
 
-
- <div class="field">
+  <%= tinymce %>
+  <div class="field">
     <%= f.label :text %><br>
-    <%= f.text_area :text , required: true, :class => "form-control", rows: 3 %>
- </div>
+    <%= link_to 'enable editor','#', class: 'enableEditor'%> | <%= link_to 'disable editor','#', class: 'removeEditor'%><br />
+    <%= f.text_area :text,rows: 3, class: 'form-control' %>
+  </div>
 
 
- <h2>Translations</h2>
-<table id='translationFields' class='table table-bordered'>
-  <thead>
-    <tr>
-      <th>&nbsp</th>
-      <th>Language</th>
-      <th>Text</th>
-    </tr>
-  </thead>
-  <tbody>
- <%= f.fields_for :translations do |translation| %>
-    <% count ||= 0 %>
-    <tr data-translation-count='<%= count%>'>
-      <td>
-         <a class='addMore'>add more</a> |
-         <a class='remove'>remove</a>
-       </td>
-      <td>
-        <%= translation.select :language , Source.supported_languages,{} ,{ :class =>"form-control languageSelect" } %>
-      </td>
-
-      <td>
-        <%= translation.text_area :text , required: true , :class => "form-control", rows: 3 %>
-       </td>
-    </tr>
-    <% count += 1 %>
- <% end %>
-  </tbody>
-</table>
+  <h2>Translations</h2>
+  <table id='translationFields' class='table table-bordered'>
+    <thead>
+      <tr>
+	<th colspan="2">Language</th>
+	<th>Text</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= f.fields_for :translations do |translation| %>
+	<tr data-translation-number="<%= translation.index + 1 %>">
+	  <td>
+	    <%= link_to 'add more', '#', :class => 'addMore' %>
+	    |
+	    <% if translation.object.new_record? %>
+	      <%= link_to 'remove', '#', :class => 'remove' %>
+	    <% else %>
+	      <%= link_to 'remove', translation_path(translation.object), :remote => true, :class => 'remove', :method => 'delete', :data => { :confirm => 'Are you sure?' } %>
+	    <% end %>
+	  </td>
+	  <td>
+	    <%= translation.select :language , Source.supported_languages, {}, :class => 'form-control languageSelect' %>
+	  </td>
+	  <td>
+	    <%= translation.text_area :text, rows: 3, class: 'form-control' %>
+	  </td>
+	</tr>
+      <% end %>
+    </tbody>
+  </table>
   <div class="actions">
     <%= f.submit %>
   </div>
