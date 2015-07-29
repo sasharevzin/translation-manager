@@ -15,6 +15,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'iso'
 gem 'unicorn'
 gem 'tinymce-rails'
+gem 'redis'
 
 group :development, :test do
   gem 'byebug'
