@@ -42,34 +42,31 @@ var removeEditor = function(){
 var addEditor = function(){
   $('.main').on('click','.enableEditor', function(){
     $('textarea').each(function(idx){
-          tinymce.execCommand("mceAddEditor", false, $(this).attr('id'));
+	  tinymce.execCommand("mceAddEditor", false, $(this).attr('id'));
      });
   });
 }
 
-var addRow = function(){
-    var lastRow = $("#translationFields tr:last").clone();
-    var tinymceDiv = lastRow.find('.mce-tinymce').remove();
-    var lastTranslationCount =  lastRow.data('translation-number');
-    lastTranslationCount += 1;
+var createTranslationRow = function() {
+    return $(  $('#translation-row').text().replace('//<![CDATA[', '').replace('//]]>', '') );
+};
 
-    lastRow.attr('data-translation-number', lastTranslationCount);
-    var selectBox = lastRow.find('td select');
-    selectBox.attr('name', 'source[translations_attributes]['+ (lastTranslationCount+1)+'][language]');
-    selectBox.attr('id', 'source_translations_attributes_'+ (lastTranslationCount+1)+'_language');
+var addRow = function() {
+    var newRow = createTranslationRow(), rowNumber = $('#translationFields tr').size() + 1;
+    newRow.data('translation-number',  rowNumber);
 
-    var textArea = lastRow.find('td textarea');
-    textArea.attr('name', 'source[translations_attributes]['+ (lastTranslationCount+1)+'][text]');
-    textArea.attr('id', 'source_translations_attributes_'+ (lastTranslationCount+1)+'_text');
-    textArea.show();
+    var selectBox = newRow.find('td select');
+    selectBox.attr('name', 'source[translations_attributes]['+ rowNumber +'][language]');
+    selectBox.attr('id', 'source_translations_attributes_'+ rowNumber +'_language');
 
-    $("#translationFields tbody").append(lastRow);
-    if (tinymceDiv[0] != null)
-      {
-        tinymce.execCommand("mceAddEditor", false, textArea.attr('id'));
-      }
+    var textArea = newRow.find('td textarea');
+    textArea.attr('name', 'source[translations_attributes]['+ rowNumber +'][text]');
+    textArea.attr('id', 'source_translations_attributes_'+ rowNumber + '_text');
+
+    $('#translationFields tbody').append(newRow);
+
     $('.languageSelect').selectunique('refresh');
-}
+};
 
 var removeRow = function(){
   $('#translationFields').on('click', '.remove', function(){

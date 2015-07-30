@@ -38,14 +38,13 @@
     </thead>
     <tbody>
       <%= f.fields_for :translations do |translation| %>
-	<tr data-translation-number="<%= translation.index + 1 %>">
+	<tr id="<%= dom_id(translation.object) %>" data-translation-number="<%= translation.index + 1 %>">
 	  <td>
-	    <%= link_to 'add more', '#', :class => 'addMore' %>
-	    |
+	    <%= link_to 'Add more', '#', :class => 'addMore' %> |
 	    <% if translation.object.new_record? %>
 	      <%= link_to 'remove', '#', :class => 'remove' %>
 	    <% else %>
-	      <%= link_to 'remove', translation_path(translation.object), :remote => true, :class => 'remove', :method => 'delete', :data => { :confirm => 'Are you sure?' } %>
+	      <%= link_to 'remove', translation_path(translation.object), :remote => true, :method => 'delete', :data => { :confirm => 'Are you sure?' } %>
 	    <% end %>
 	  </td>
 	  <td>
@@ -58,7 +57,24 @@
       <% end %>
     </tbody>
   </table>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => 'btn btn-primary' %>
   </div>
+
+  <%= javascript_tag :id => "translation-row", :type => "text/x-html" do %>
+    <%= f.fields_for :translations, Translation.new do |translation| %>
+      <tr>
+	<td>
+	  <%= link_to 'remove', '#', :class => 'remove' %>
+	</td>
+	<td>
+	  <%= translation.select :language , Source.supported_languages, {}, :class => 'form-control languageSelect' %>
+	</td>
+	<td>
+	  <%= translation.text_area :text, rows: 3, class: 'form-control' %>
+	</td>
+      </tr>
+    <% end %>
+  <% end %>
 <% end %>
