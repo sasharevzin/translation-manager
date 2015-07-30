@@ -16,6 +16,7 @@ gem 'iso'
 gem 'unicorn'
 gem 'tinymce-rails'
 gem 'redis'
+gem 'rails-observers'
 
 group :development, :test do
   gem 'byebug'
