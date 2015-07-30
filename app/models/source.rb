@@ -1,6 +1,5 @@
-# -*- encoding : utf-8 -*-
 class Source < ActiveRecord::Base
-  has_many :translations, dependent: :destroy
+  has_many :translations, dependent: :destroy, inverse_of: :source
   accepts_nested_attributes_for :translations
 
   validates :text, presence: true
