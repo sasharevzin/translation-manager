@@ -8,7 +8,10 @@ class TranslationCache
   # rescue Redis::CannotConnectError
   def delete(*translations)
     return unless delete_supported?
+
     translations.each do |t|
+      next unless t.source
+
       key = key(t.language, t.source.text)
       I18n.backend.store.del(key)
     end
@@ -17,6 +20,8 @@ class TranslationCache
   private
 
   def store_translation(t)
+    return unless t.source
+
     if changed?(t)
       lang = t.language_changed?    ? t.language_changes[0]    : t.language
       text = t.source.text_changed? ? t.source.text_changes[0] : t.source.text
@@ -35,11 +40,11 @@ class TranslationCache
   end
 
   def delete_supported?
-    I18n.backend.store.respond_to?(:del)
+    be = I18n.backend
+    be.is_a?(I18n::Backend::KeyValue) && be.store.respond_to?(:del)
   end
 
   def key(locale, key)
     sprintf "%s.%s", locale, I18n::Backend::Flatten.escape_default_separator(key)
   end
 end
-
