@@ -3,6 +3,11 @@
 #    -  '**/*.thor'
 #    -  '**/*.rake'
 
+AllCops:
+  Exclude:
+    - db/**/*
+    - bin/*
+
 # If enabled wants 1_000_000 instead of 1000000
 Style/NumericLiterals:
   Enabled: false
