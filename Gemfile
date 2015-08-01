@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+
 gem 'rails', '4.2.1'
 gem 'mysql2'
 gem 'bootstrap-sass', '~> 3.3.1'
@@ -35,6 +36,7 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-bundler' # for capistrano/bundler
   gem 'capistrano3-unicorn'
+  gem 'quiet_assets'
 end
 
 group :test do
