@@ -2,9 +2,7 @@ require 'rails_helper'
 require 'shared_examples_for_localized_text'
 
 RSpec.describe Source, type: :model do
-  subject { Fabricate.build(:source) }
-
-  #it_behaves_like 'localized text'
+  it_behaves_like 'localized text'
 
   describe 'schema' do
     it { expect(subject).to have_db_column(:context).of_type(:string).with_options(null: true) }

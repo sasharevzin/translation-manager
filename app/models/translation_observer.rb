@@ -1,5 +1,5 @@
 class TranslationObserver < ActiveRecord::Observer
-  def around_save(translation)
+  def before_save(translation)
     TranslationCache.new.update(translation)
   end
 
@@ -7,4 +7,3 @@ class TranslationObserver < ActiveRecord::Observer
     TranslationCache.new.delete(translation)
   end
 end
-
