@@ -8,10 +8,12 @@
   <%= @source.text.html_safe %>
 </p>
 
-<p>
-  <strong>Context:</strong>
-  <%= @source.context %>
-</p>
+<% if @source.context.present? %>
+    <p>
+	<strong>Context:</strong>
+	<%= @source.context %>
+    </p>
+<% end %>
 
 <table class="table table-bordered">
   <thead>
