@@ -17,6 +17,8 @@ RSpec.describe Source, type: :model do
   end
 
   describe 'validations' do
+    # Validation will only run if we have source has text and language
+    subject { Fabricate.build(:source) }
     it { expect(subject).to validate_uniqueness_of(:text).scoped_to(:language) }
   end
 end

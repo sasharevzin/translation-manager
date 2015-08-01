@@ -17,6 +17,7 @@ RSpec.describe Translation, type: :model do
   end
 
   describe 'validations' do
+    subject { Fabricate.build(:translation, :source => Fabricate(:source)) }
     it { expect(subject).to validate_uniqueness_of(:language).scoped_to(:source_id) }
   end
 end

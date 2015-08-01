@@ -3,7 +3,7 @@ class Translation < ActiveRecord::Base
 
   validates :text, presence: true
   validates :language, presence: true, locale: true
-  validates :language, uniqueness: { scope: :source_id }
+  validates :language, uniqueness: { scope: :source_id, if: ->(t) { t.source } }
 
   default_scope -> { order('language asc') }
 end
