@@ -23,8 +23,8 @@ class TranslationCache
     return unless t.source
 
     if changed?(t)
-      lang = t.language_changed?    ? t.language_changes[0]    : t.language
-      text = t.source.text_changed? ? t.source.text_changes[0] : t.source.text
+      lang = t.language_changed?    ? t.language_change[0]    : t.language
+      text = t.source.text_changed? ? t.source.text_change[0] : t.source.text
       key  = key(lang, text)
 
       I18n.backend.store.del(key)
