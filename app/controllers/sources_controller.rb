@@ -32,6 +32,15 @@ class SourcesController < ApplicationController
     end
   end
 
+  def update_by_text_and_lang
+    @source = Source.where(text: params[:original], language: params[:language]).first
+    if @source and @source.update_attributes(source_params)
+      redirect_to @source, notice: 'Source text updated successfully'
+    else
+      render action: 'new', status: 500, message: "Unable to update source text"
+    end
+  end
+
   def destroy
     @source.destroy
     redirect_to sources_url, notice: 'Source and translations destroyed successfully'
