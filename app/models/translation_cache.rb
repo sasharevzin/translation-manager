@@ -1,20 +1,25 @@
 require 'i18n'
 
+# In an attempt to insulate itself from I18n specifics (though I18n doesn't make this easy) this class
+# goes a bit out of its way to use I18n's interface instead the raw  key/value store.
 class TranslationCache
+  CacheError = Class.new(StandardError)
+
   def update(*translations)
     translations.each { |t| store_translation(t) }
+  rescue => e
+    raise CacheError, e.message
   end
 
-  # rescue Redis::CannotConnectError
   def delete(*translations)
     return unless delete_supported?
 
     translations.each do |t|
-      next unless t.source
-
-      key = key(t.language, t.source.text)
-      I18n.backend.store.del(key)
+      next unless t.source && t.language
+      delete_from_cache(t.language, t.source.text)
     end
+  rescue => e
+    raise CacheError, e.message
   end
 
   private
@@ -25,13 +30,11 @@ class TranslationCache
     if changed?(t)
       lang = t.language_changed?    ? t.language_change[0]    : t.language
       text = t.source.text_changed? ? t.source.text_change[0] : t.source.text
-      key  = key(lang, text)
 
-      I18n.backend.store.del(key)
+      delete_from_cache(lang, text)
     end
 
-    key = key(t.language, t.source.text)
-    I18n.backend.store_translations t.language, key => t.text
+    I18n.backend.store_translations t.language, t.source.text => t.text
   end
 
   def changed?(t)
@@ -39,12 +42,25 @@ class TranslationCache
     delete_supported? && (t.language_changed? || t.source.text_changed?)
   end
 
+  def cache
+    return @cache if defined?(@cache)
+
+    be = Array( I18n.backend.respond_to?(:backends) ? I18n.backend.backends : I18n.backend ).
+         find { |b| b.is_a?(I18n::Backend::KeyValue) }
+
+    @cache = be.respond_to?(:store) ? be.store : nil
+  end
+
   def delete_supported?
-    be = I18n.backend
-    be.is_a?(I18n::Backend::KeyValue) && be.store.respond_to?(:del)
+    cache.respond_to?(:del)
   end
 
   def key(locale, key)
-    sprintf "%s.%s", locale, I18n::Backend::Flatten.escape_default_separator(key)
+    bef = I18n::Backend::Flatten
+    sprintf "%s%s%s", locale, bef::FLATTEN_SEPARATOR, bef.escape_default_separator(key)
+  end
+
+  def delete_from_cache(lang, text)
+    cache.del(key(lang, text))
   end
 end
