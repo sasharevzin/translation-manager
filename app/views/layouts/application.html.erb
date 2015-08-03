@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Translations</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=devise-width, initial-scale=1">
+  <title>MP Translations</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'jquery.selectunique.js', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class='main' id='main'>
-    <ul class="nav nav-tabs nav-justified">
-      <li><%= link_to 'Home', root_path %></li>
-      <li><%= link_to 'New Translation', new_source_path %></li>
-    </ul>
+  <%= navbar do %>
+    <%= vertical do %>
+      <%= link_to 'MP Translations', root_path %>
+    <% end %>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <%= horizontal class: 'navbar-right' do %>
+      <%= link_to 'Create', new_source_path, class: 'btn btn-sm btn-success navbar-btn' %>
+    <% end %>
+
+    <%= nav class: 'navbar-right' do %>
+      <%= link_to 'Search', search_path %>
+      <%= link_to 'View', sources_path %>
+    <% end %>
+  <% end %>
+
+  <div class="container">
+    <%= render_flash_messages %>
     <%= yield %>
   </div>
 </body>

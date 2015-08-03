@@ -1,38 +1,59 @@
-<p>
-  <strong>Language:</strong>
-  <%= @source.language %>
-</p>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="pull-rightX">
+      <%= form_for @source, method: 'delete', html: { style: 'display: inline' } do |f| %>
+        <%= f.submit 'Delete', class: 'btn btn-xs btn-danger'  %>
+      <% end %>
+      &#183;
+      <%= link_to 'Edit', edit_source_path(@source) %>
+    </div>
 
-<p>
-  <strong>Text:</strong>
-  <%= @source.text.html_safe %>
-</p>
+    <h2>
+      Source |
+      <small>
+	<%= @source.language %>
+	<% if @source.context.present? %>
+	  &#183; <%= @source.context %>
+	<% end %>
+      </small>
+    </h2>
+  </div>
+</div>
 
-<% if @source.context.present? %>
-    <p>
+<div class="row">
+  <div class="col-lg-12">
+    <blockquote>
+      <%= @source.text.html_safe %>
+    </blockquote>
+
+    <% if @source.context.present? %>
+      <p>
 	<strong>Context:</strong>
 	<%= @source.context %>
-    </p>
-<% end %>
-
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Language</th>
-      <th>Text</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @source.translations.each do |translation| %>
-      <tr>
-        <td><%= translation.language %></td>
-        <td><%= translation.text.html_safe %></td>
-      </tr>
+      </p>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
 
-<br>
-<%= link_to 'Edit', edit_source_path(@source) %> |
-<%= link_to 'Back', sources_path %>
+<div class="row">
+  <div class="col-lg-12">
+    <h3>Translations <small>(<%= @source.translations.size %>)</small></h3>
+    <table class='table'>
+      <thead>
+	<tr>
+	  <th>Language</th>
+	  <th>Text</th>
+	</tr>
+      </thead>
+
+      <tbody>
+	<% @source.translations.each do |translation| %>
+	  <tr>
+	    <td><%= translation.language %></td>
+	    <td><%= translation.text.html_safe %></td>
+	  </tr>
+	<% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
