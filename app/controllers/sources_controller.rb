@@ -11,13 +11,13 @@ class SourcesController < ApplicationController
 
   def new
     @source = Source.new
-    @translations = @source.translations.build
+    @source.translations.build
   end
 
   def create
     @source = Source.new(source_params)
     if @source.save
-      redirect_to @source, notice: 'Source and translations are saved successfully'
+      redirect_to @source, notice: 'Source and translations created'
     else
       render action: 'new'
     end
@@ -25,7 +25,7 @@ class SourcesController < ApplicationController
 
   def update
     if @source.update_attributes(source_params)
-      redirect_to @source, notice: 'Source and translations are updated successfully'
+      redirect_to @source, notice: 'Source and translations updated'
     else
       render action: 'edit'
     end
@@ -33,13 +33,13 @@ class SourcesController < ApplicationController
 
   def destroy
     @source.destroy
-    redirect_to sources_url, notice: 'Source and translations destroyed successfully'
+    redirect_to sources_url, notice: 'Source and translations deleted'
   end
 
   private
 
   def populate_source
-    @source = Source.find(params[:id])
+    @source = Source.includes(:translations).find(params[:id])
   end
 
   def source_params
