@@ -1,80 +1,61 @@
-<%= form_for(@source) do |f| %>
-  <% if @source.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@source.errors.count, "error") %> prohibited this source translation from being saved:</h2>
-      <ul>
-	<% @source.errors.full_messages.each do |message| %>
-	  <li><%= message %></li>
-	<% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :language %><br>
-    <%= f.select :language , Source.supported_languages ,{} ,{ class: "form-control languageSelect" }%>
-  </div>
-
-  <div class="field">
-    <%= f.label :context %> <br>
-    <%= f.text_field :context, class: 'form-control'%>
-  </div>
+<%= form_for @source, layout: :basic do |f| %>
+  <%= f.select :language , Source.supported_languages, {}, class: 'languageSelect' %>
+  <%= f.text_field :context %>
+  <%= f.text_area :text %>
 
   <%= tinymce %>
-  <div class="field">
-    <%= f.label :text %><br>
-    <%= link_to 'enable editor','#', class: 'enableEditor'%> | <%= link_to 'disable editor','#', class: 'removeEditor'%><br />
-    <%= f.text_area :text,rows: 3, class: 'form-control' %>
+
+  <div class="pull-right">
+    <%= link_to 'Add', '#', class: 'add-translation' %>
   </div>
 
-
-  <h2>Translations</h2>
-  <table id='translationFields' class='table table-bordered'>
+  <h3>Translations <small>(<%= @source.translations.size %>)</small></h3>
+  <table id='translationFields' class='table'>
     <thead>
       <tr>
-	<th colspan="2">Language</th>
-	<th>Text</th>
+	<th>Language</th>
+	<th colspan="2">Text</th>
       </tr>
     </thead>
+
     <tbody>
-      <%= f.fields_for :translations do |translation| %>
-	<tr id="<%= dom_id(translation.object) %>" data-translation-number="<%= translation.index + 1 %>">
+      <%= f.fields_for :translations, layout: :inline, fieldset: false, errors: {messages: true} do |translation| %>
+        <tr id="<%= dom_id(translation.object) %>" class="translation">
 	  <td>
-	    <%= link_to 'Add more', '#', :class => 'addMore' %> |
+	    <%= translation.select :language, Source.supported_languages, {}, class: 'languageSelect' %>
+	    <%= translation.object.errors.to_a.to_sentence %>
+	  </td>
+	  <td>
+	    <%= translation.text_area :text %>
+	  </td>
+	  <td align="right">
 	    <% if translation.object.new_record? %>
-	      <%= link_to 'remove', '#', :class => 'remove' %>
+	      <%= link_to 'Delete', '#', :class => 'remove btn btn-xs btn-danger' %>
 	    <% else %>
-	      <%= link_to 'remove', translation_path(translation.object), :remote => true, :method => 'delete', :data => { :confirm => 'Are you sure?' } %>
+	      <%= link_to 'Delete', translation.object, :remote => true, method: :delete, class: 'btn btn-xs btn-danger', data: { confirm: 'Are you sure?' } %>
 	    <% end %>
-	  </td>
-	  <td>
-	    <%= translation.select :language , Source.supported_languages, {}, :class => 'form-control languageSelect' %>
-	  </td>
-	  <td>
-	    <%= translation.text_area :text, rows: 3, class: 'form-control' %>
 	  </td>
 	</tr>
       <% end %>
     </tbody>
   </table>
 
-  <div class="actions">
-    <%= f.submit :class => 'btn btn-primary' %>
-  </div>
+  <%= f.submit %>
 
-  <%= javascript_tag :id => "translation-row", :type => "text/x-html" do %>
-    <%= f.fields_for :translations, Translation.new do |translation| %>
-      <tr>
+  <%= javascript_tag :id => 'translation-row', :type => 'text/x-html' do %>
+    <%= f.fields_for :translations, Translation.new, layout: :inline, fieldset: false, include_id: false  do |translation| %>
+      <tr class="translation">
 	<td>
-	  <%= link_to 'remove', '#', :class => 'remove' %>
+	  <%= translation.select :language, Source.supported_languages, {}, class: 'languageSelect' %>
 	</td>
 	<td>
-	  <%= translation.select :language , Source.supported_languages, {}, :class => 'form-control languageSelect' %>
+	  <%= translation.text_area :text %>
 	</td>
-	<td>
-	  <%= translation.text_area :text, rows: 3, class: 'form-control' %>
+	<td align='right'>
+	  <%= link_to 'Delete', '#', :class => 'remove btn btn-xs btn-danger' %>
 	</td>
       </tr>
     <% end %>
   <% end %>
+
 <% end %>
