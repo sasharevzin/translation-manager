@@ -44,6 +44,7 @@ group :development do
 end
 
 group :test do
+  gem 'fakeredis', '~> 0.5.0', require: 'fakeredis/rspec'
   gem 'shoulda'
   gem 'simplecov'
   gem 'shoulda-matchers', require: false

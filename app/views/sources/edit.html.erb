@@ -1,10 +1,7 @@
 <div class="row">
   <div class="col-lg-12">
-    <div class="editor disabled">
-      Editor:
-      <%= link_to 'On', '#', class: 'on btn btn-xs btn-info' %>
-      <%= link_to 'Off', '#', class: 'off btn btn-xs btn-default' %>
-    </div>
+    <%= render 'shared/toggle_wysiwyg' %>
+
     <h2>Edit Source</h2>
     <%= render 'form' %>
   </div>

@@ -126,6 +126,8 @@ GEM
     fabrication (2.13.2)
     faker (1.4.3)
       i18n (~> 0.5)
+    fakeredis (0.5.0)
+      redis (~> 3.0)
     ffi (1.9.8)
     flay (2.4.0)
       ruby_parser (~> 3.0)
@@ -365,6 +367,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   fabrication
   faker
+  fakeredis (~> 0.5.0)
   guard
   guard-rspec
   iso
