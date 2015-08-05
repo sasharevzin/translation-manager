@@ -15,3 +15,25 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.editor {
+    &.enabled {
+	.on {
+	    display: inline;
+	}
+
+	.off {
+	    display: none;
+	}
+    }
+
+    &.disabled {
+	.on {
+	    display: none;
+	}
+
+	.off {
+	    display: inline;
+	}
+    }
+}

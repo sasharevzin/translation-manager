@@ -1,15 +1,13 @@
 <%= form_for @source, layout: :basic do |f| %>
-  <%= f.select :language , Source.supported_languages, {}, class: 'languageSelect' %>
+  <%= f.select :language , Source.supported_languages %>
   <%= f.text_field :context %>
   <%= f.text_area :text %>
-
-  <%= tinymce %>
 
   <div class="pull-right">
     <%= link_to 'Add', '#', class: 'add-translation' %>
   </div>
 
-  <h3>Translations <small>(<%= @source.translations.size %>)</small></h3>
+  <h3>Translations <!--small>(<%= @source.translations.size %>)</small--></h3>
   <table id='translationFields' class='table'>
     <thead>
       <tr>
@@ -22,11 +20,11 @@
       <%= f.fields_for :translations, layout: :inline, fieldset: false, errors: {messages: true} do |translation| %>
         <tr id="<%= dom_id(translation.object) %>" class="translation">
 	  <td>
-	    <%= translation.select :language, Source.supported_languages, {}, class: 'languageSelect' %>
+	    <%= translation.select :language, Source.supported_languages %>
 	    <%= translation.object.errors.to_a.to_sentence %>
 	  </td>
 	  <td>
-	    <%= translation.text_area :text %>
+	    <%= translation.text_area :text, class: 'tinymce' %>
 	  </td>
 	  <td align="right">
 	    <% if translation.object.new_record? %>
@@ -46,7 +44,7 @@
     <%= f.fields_for :translations, Translation.new, layout: :inline, fieldset: false, include_id: false  do |translation| %>
       <tr class="translation">
 	<td>
-	  <%= translation.select :language, Source.supported_languages, {}, class: 'languageSelect' %>
+	  <%= translation.select :language, Source.supported_languages %>
 	</td>
 	<td>
 	  <%= translation.text_area :text %>

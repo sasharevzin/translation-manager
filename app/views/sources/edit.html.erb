@@ -1,7 +1,9 @@
 <div class="row">
   <div class="col-lg-12">
-    <div>
-      <%= link_to 'Enable editor', '#', class: 'enable-editor' %>
+    <div class="editor disabled">
+      Editor:
+      <%= link_to 'On', '#', class: 'on btn btn-xs btn-info' %>
+      <%= link_to 'Off', '#', class: 'off btn btn-xs btn-default' %>
     </div>
     <h2>Edit Source</h2>
     <%= render 'form' %>
