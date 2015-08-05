@@ -21,8 +21,8 @@
     <% end %>
 
     <%= nav class: 'navbar-right' do %>
-      <%= link_to 'Search', search_path %>
-      <%= link_to 'View', sources_path %>
+      <%= link_to 'Search', '#', data: { toggle: 'modal', target: '#modal-search' } %>
+      <%= link_to 'Sources', sources_path %>
     <% end %>
   <% end %>
 
@@ -30,5 +30,7 @@
     <%= render_flash_messages %>
     <%= yield %>
   </div>
+
+  <%= render 'shared/search' %>
 </body>
 </html>

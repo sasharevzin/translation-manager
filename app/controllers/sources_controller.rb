@@ -4,9 +4,16 @@ class SourcesController < ApplicationController
   after_action :allow_iframe
 
   def index
-    @sources = Source.where('text LIKE ?', "%#{params[:text]}%")
-    @sources = @sources.where(language: params[:language]) if params[:language].present?
-    @sources = @sources.paginate(page: params[:page], per_page: params[:per_page])
+    @sources = Source.paginate(page: params[:page], per_page: params[:per_page])
+  end
+
+  def search
+    if params[:text].blank? && params[:language].blank?
+      redirect_to sources_path
+      return
+    end
+
+    @sources = Source.search(params)
   end
 
   def new
@@ -19,6 +26,7 @@ class SourcesController < ApplicationController
     if @source.save
       redirect_to @source, notice: 'Source and translations created'
     else
+      save_failed!
       render action: 'new'
     end
   end
@@ -27,6 +35,7 @@ class SourcesController < ApplicationController
     if @source.update_attributes(source_params)
       redirect_to @source, notice: 'Source and translations updated'
     else
+      save_failed!
       render action: 'edit'
     end
   end
@@ -37,6 +46,10 @@ class SourcesController < ApplicationController
   end
 
   private
+
+  def save_failed!
+    flash.now[:error] = 'Save Failed! Correct the errors below and try again.'
+  end
 
   def populate_source
     @source = Source.includes(:translations).find(params[:id])
