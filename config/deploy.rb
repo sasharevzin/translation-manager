@@ -7,7 +7,7 @@ set :repo_url, 'git@github.com:rgenerator/mp-translations.git'
 # Default branch is :master
 set :branch, 'master'
 
-set :deploy_to, '/var/www/translations'
+set :deploy_to, '/var/www/mp-translations'
 
 # Default value for :scm is :git
 set :scm, :git
