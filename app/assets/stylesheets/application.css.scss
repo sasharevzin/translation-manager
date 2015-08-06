@@ -16,6 +16,10 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.navbar-brand img {
+  display: inline-block;
+}
+
 .editor {
     &.enabled {
 	.on {

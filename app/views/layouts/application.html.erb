@@ -13,7 +13,10 @@
 <body>
   <%= navbar do %>
     <%= vertical do %>
-      <%= link_to 'MP Translations', root_path %>
+      <%= link_to root_path do %>
+	<%= image_tag 'logo.png', :size => '25x25' %>
+	Translations
+      <% end %>
     <% end %>
 
     <%= horizontal class: 'navbar-right' do %>
