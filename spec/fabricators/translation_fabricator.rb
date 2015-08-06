@@ -1,4 +1,4 @@
 Fabricator :translation do
   text Faker::Lorem.paragraph
-  language 'en-US'
+  language { [:pt, :es, :fr].sample }
 end

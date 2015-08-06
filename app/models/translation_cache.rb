@@ -5,6 +5,11 @@ require 'i18n'
 class TranslationCache
   CacheError = Class.new(StandardError)
 
+  def self.key(locale, key)
+    bef = I18n::Backend::Flatten
+    sprintf '%s%s%s', locale, bef::FLATTEN_SEPARATOR, bef.escape_default_separator(key)
+  end
+
   def update(*translations)
     translations.each { |t| store_translation(t) }
   rescue => e
@@ -55,12 +60,7 @@ class TranslationCache
     cache.respond_to?(:del)
   end
 
-  def key(locale, key)
-    bef = I18n::Backend::Flatten
-    sprintf "%s%s%s", locale, bef::FLATTEN_SEPARATOR, bef.escape_default_separator(key)
-  end
-
   def delete_from_cache(lang, text)
-    cache.del(key(lang, text))
+    cache.del(self.class.key(lang, text))
   end
 end
