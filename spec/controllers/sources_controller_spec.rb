@@ -27,11 +27,6 @@ RSpec.describe SourcesController, type: :controller do
       get :new, {}
       expect(assigns(:source)).to be_a_new(Source)
     end
-
-    it 'assigns translations as @translations' do
-      get :new, {}
-      expect(assigns(:translations)).to be_a_new(Translation)
-    end
   end
 
   describe 'POST #create' do

@@ -1,16 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe 'sources/index', type: :view do
-  let(:sources) { 2.times.collect { Fabricate(:source) } }
+  before do
+    2.times.collect { Fabricate(:source) }
+  end
 
   it 'renders a list of sources' do
+    # Because of paging view expects an ActiveRecord::Relation
+    sources = Source.paginate(page: 1)
     assign(:sources, sources)
+
     render
 
     sources.each do |source|
-      expect(rendered).to have_selector('table tr td', text: source.id.to_s)
-      expect(rendered).to have_selector('table tr td', text: source.text.to_s)
-      expect(rendered).to have_selector('table tr td', text: source.language.to_s)
+      expect(rendered).to match source.text
+      expect(rendered).to match source.language
     end
   end
 end

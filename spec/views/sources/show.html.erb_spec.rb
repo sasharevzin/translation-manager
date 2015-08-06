@@ -6,8 +6,10 @@ RSpec.describe 'sources/show', type: :view do
   it 'renders a list of sources' do
     assign(:source, source)
     render
-    expect(rendered).to have_selector('p', text: source.text.to_s)
-    expect(rendered).to have_selector('p', text: source.language.to_s)
+
+    expect(rendered).to match source.text
+    expect(rendered).to match source.language
+
     expect(rendered).to have_selector('table tr td',
                                       text: source.translations.first.language.to_s)
     expect(rendered).to have_selector('table tr td',
