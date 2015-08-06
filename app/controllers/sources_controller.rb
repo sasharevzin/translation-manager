@@ -34,15 +34,15 @@ class SourcesController < ApplicationController
   end
 
   def update_by_text_and_lang
-    @source = Source.where(text: source_params[:original], language: source_params[:language]).first
+    @source = Source.where(text: params[:original], language: source_params[:language]).first
     if @source
-      if @source.update_attributes(source_params.except(:original))
+      if @source.update_attributes(source_params)
         redirect_to @source, notice: 'Source text updated successfully'
       else
-        render action: 'error', status: 500, locals: {message: "Unable to update source text."}
+        render action: 'error', status: 422, locals: {message: "Unable to update source text."}
       end
     else
-      render action: 'error', status: 200, locals: {message: "No translations found for source: <#{params[:original]}>"}
+      render action: 'error', status: 404, locals: {message: "No translations found for source: <#{params[:original]}>"}
     end
   end
 

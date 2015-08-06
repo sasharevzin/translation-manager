@@ -191,20 +191,20 @@ RSpec.describe SourcesController, type: :controller do
     end
 
     describe 'with invalid attributes' do
-      it 'raises exception if given no params' do
+      it 'raises exception if missing required params' do
         source = Fabricate(:source)
         expect do
           patch :update_by_text_and_lang, original: source.text, language: source.language
         end.to raise_error(ActionController::ParameterMissing)
       end
 
-      it 'assigns source to @source' do
+      it 'returns 404 if no source found for text/lang combo' do
         source = Fabricate(:source)
         source_params = {}
         source_params[:text] = Faker::Lorem.paragraph
         source_params[:language] = 'abc'
         patch :update_by_text_and_lang, source: source_params, original: source.text, language: source.language
-        expect(assigns(:source)).to be_kind_of(Source)
+        expect(response.status).to eq 404
       end
     end  
   end
