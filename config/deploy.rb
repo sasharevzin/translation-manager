@@ -2,7 +2,7 @@
 lock '3.4.0'
 
 set :application, 'translations'
-set :repo_url, 'git@github.com:rgenerator/translations.git'
+set :repo_url, 'git@github.com:rgenerator/mp-translations.git'
 
 # Default branch is :master
 set :branch, 'master'
