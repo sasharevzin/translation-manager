@@ -1,13 +1,23 @@
 # -*- encoding : utf-8 -*-
 
 # Thor task for exporting PO file
-class ExportPo < Thor
-  require_relative '../../config/environment.rb'
-  require_relative '../unsupported_language_error'
-  desc 'for <languages>',
-       "export PO file for the given language. Supported languages are #{Source.supported_languages.to_sentence}"
-  def for(*languages)
-    languages.each do |language|
+class Translations < Thor
+  require './config/environment.rb'
+
+  # Needed to avoid circular reference caused by observers + Rails autoloading
+  Dir['./app/models/*.rb'].each { |path| require path }
+
+  class Cache < Thor
+    desc 'load', 'load all of the translations into the cache'
+    def load
+      cache = TranslationCache.new
+      Translation.includes(:source).find_in_batches { |t| cache.update(t) }
+    end
+  end
+
+  desc 'export <languages>', "export PO file(s) for the given language(s). Supported languages are: #{Source.supported_languages.to_sentence}"
+  def export(language, *others)
+    (others << language).each do |language|
       check_language(language)
       file = generate_file_with_comments(language)
       search_and_write_file(file, language)
@@ -54,24 +64,25 @@ class ExportPo < Thor
         .where('translations.language = ?', language)
         .references(:translations)
         .find_each do |source|
-          translation = source.translations.find_by(language: language)
-          next unless translation
 
-          source_text = source.text.dup
-          source_text_ary = source_text.split("\n")
+        translation = source.translations.find_by(language: language)
+        next unless translation
 
-          source_text_ary.each_with_index do |l, idx|
-             l.gsub!("\r",'')
-            file.write(get_source_text_to_write(idx, l, source_text_ary.length))
-          end
+        source_text = source.text.dup
+        source_text_ary = source_text.split("\n")
 
-          translation_text = translation.text.dup
-          translation_text_ary = translation_text.split("\n")
+        source_text_ary.each_with_index do |l, idx|
+          l.gsub!("\r",'')
+          file.write(get_source_text_to_write(idx, l, source_text_ary.length))
+        end
 
-          translation_text_ary.each_with_index do |l, idx|
-            l.gsub!("\r",'')
-            file.write(get_translation_text_to_write(idx, l, translation_text_ary.length))
-          end
+        translation_text = translation.text.dup
+        translation_text_ary = translation_text.split("\n")
+
+        translation_text_ary.each_with_index do |l, idx|
+          l.gsub!("\r",'')
+          file.write(get_translation_text_to_write(idx, l, translation_text_ary.length))
+        end
       end
     end
   end
