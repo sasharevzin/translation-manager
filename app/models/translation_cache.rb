@@ -5,16 +5,16 @@ require 'i18n'
 class TranslationCache
   CacheError = Class.new(StandardError)
 
-  def update(*translations)
-    translations.each { |t| store_translation(t) }
+  def update(translations)
+    Array(translations).each { |t| store_translation(t) }
   rescue => e
     raise CacheError, e.message
   end
 
-  def delete(*translations)
+  def delete(translations)
     return unless delete_supported?
 
-    translations.each do |t|
+    Array(translations).each do |t|
       next unless t.source && t.language
       delete_from_cache(t.language, t.source.text)
     end
