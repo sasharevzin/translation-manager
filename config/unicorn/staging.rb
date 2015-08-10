@@ -1,4 +1,4 @@
-# unicorn_rails -c /var/www/translations/current/tmp/sockets/unicorn.sock -E production -D
+# unicorn_rails -c /var/www/mp-translations/current/tmp/sockets/unicorn.sock -E production -D
 
 rails_env = ENV['RAILS_ENV'] || 'staging'
 
@@ -13,10 +13,10 @@ preload_app true
 timeout 30
 
 # Listen on a Unix data socket
-listen '/var/www/translations/current/tmp/sockets/unicorn.sock', backlog: 2048
-stderr_path '/var/www/translations/current/log/unicorn.stderr.log'
-stdout_path '/var/www/translations/current/log/unicorn.stdout.lgo'
-pid '/var/www/translations/shared/tmp/pids/unicorn.pid'
+listen '/var/www/mp-translations/current/tmp/sockets/unicorn.sock', backlog: 2048
+stderr_path '/var/www/mp-translations/current/log/unicorn.stderr.log'
+stdout_path '/var/www/mp-translations/current/log/unicorn.stdout.lgo'
+pid '/var/www/mp-translations/shared/tmp/pids/unicorn.pid'
 ##
 
 # http://www.rubyenterpriseedition.com/faq.html#adapt_apps_for_cow
