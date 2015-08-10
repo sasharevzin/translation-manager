@@ -18,7 +18,8 @@ class SourcesController < ApplicationController
   end
 
   def new
-    @source = Source.new
+    # We set attributes here because sources can be created from a search with 0 results.
+    @source = Source.new(source_params)
     @source.translations.build
   end
 
@@ -45,9 +46,9 @@ class SourcesController < ApplicationController
     @source = Source.where(text: params[:original], language: source_params[:language]).first
     if @source
       if @source.update_attributes(source_params)
-        redirect_to @source, notice: 'Source text updated successfully'
+	redirect_to @source, notice: 'Source text updated successfully'
       else
-        render action: 'error', status: 422, locals: {message: "Unable to update source text."}
+	render action: 'error', status: 422, locals: {message: "Unable to update source text."}
       end
     else
       render action: 'error', status: 404, locals: {message: "No translations found for source: <#{params[:original]}>"}
@@ -72,7 +73,7 @@ class SourcesController < ApplicationController
   def source_params
     params.require(:source)
       .permit(:language, :text, :context, :original,
-              translations_attributes: [:language, :text, :context, :id, :source_id])
+	      translations_attributes: [:language, :text, :context, :id, :source_id])
   end
 
   def allow_iframe

@@ -1,7 +1,7 @@
 <h2>Search: <span style="font-weight:normal;font-size:0.9em"><%= current_search_query(params) %></span></h2>
 
 <% if @sources.none? %>
-  <p>No sources found.</p>
+  <p>No sources found. Would you like to <%= link_to 'create a source from this search', new_source_path(:source => { :text => params[:text] }) %>?</p>
 <% else %>
   <%= render 'sources', :sources => @sources %>
 <% end %>
