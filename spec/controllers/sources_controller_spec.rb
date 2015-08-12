@@ -27,6 +27,12 @@ RSpec.describe SourcesController, type: :controller do
       get :new, {}
       expect(assigns(:source)).to be_a_new(Source)
     end
+
+    it "allows the source's text to be set" do
+      get :new, source: { text: 'foo' }
+      expect(assigns(:source)).to be_a_new(Source)
+      expect(assigns(:source).text).to eq 'foo'
+    end
   end
 
   describe 'POST #create' do
@@ -201,9 +207,9 @@ RSpec.describe SourcesController, type: :controller do
         patch :update_by_text_and_lang, source: source_params, original: source.text, language: source.language
         expect(response.status).to eq 404
       end
-    end  
+    end
   end
-  
+
   describe 'DELETE #destroy' do
     let!(:source) { Fabricate(:source) }
     it 'decreases the count by -1' do
