@@ -18,8 +18,8 @@ class SourcesController < ApplicationController
   end
 
   def new
-    # We set attributes here because sources can be created from a search with 0 results.
-    @source = Source.new(source_params)
+    # We set attributes here because we allow sources to be created from a search with 0 results.
+    @source = Source.new(params.permit(source: [:text])[:source])
     @source.translations.build
   end
 
