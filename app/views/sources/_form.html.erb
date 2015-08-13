@@ -3,11 +3,10 @@
   <%= f.text_field :context %>
   <%= f.text_area :text %>
 
-  <div class="pull-right">
-    <%= link_to 'Add', '#', class: 'add-translation' %>
-  </div>
-
   <h3>Translations <!--small>(<%= @source.translations.size %>)</small--></h3>
+  <div class="pull-left">
+    <%= link_to 'Add New Translation', '#', class: 'add-translation btn btn-success btn-sm' %>
+  </div>
   <table id='translationFields' class='table'>
     <thead>
       <tr>
@@ -17,7 +16,7 @@
     </thead>
 
     <tbody>
-      <%= f.fields_for :translations, layout: :inline, fieldset: false, errors: {messages: true} do |translation| %>
+      <%= f.fields_for :translations, layout: :inline, fieldset: false, errors: { messages: true } do |translation| %>
         <tr id="<%= dom_id(translation.object) %>" class="translation">
 	  <td>
 	    <%= translation.select :language, Source.supported_languages %>
@@ -37,9 +36,15 @@
       <% end %>
     </tbody>
   </table>
-
-  <%= f.submit %>
-
+  <div class="pull-left">
+    <%= link_to 'Add New Translation', '#', class: 'add-translation btn btn-success btn-sm' %>
+  </div>
+  <div class="pull-right">
+    <% if @source.id %>
+      <%= link_to 'Cancel', source_path(@source), class: 'btn btn-danger', data: { confirm: 'Are you sure you want to discard your changes?' } %>
+    <% end %>
+    <%= f.submit %>
+  </div>
   <%= javascript_tag :id => 'translation-row', :type => 'text/x-html' do %>
     <%= f.fields_for :translations, Translation.new, layout: :inline, fieldset: false, include_id: false  do |translation| %>
       <tr class="translation">
