@@ -48,10 +48,10 @@
 
       <tbody>
 	<% @source.translations.each do |translation| %>
-	  <tr id="<%= dom_id(translation) %>">
+	  <tr id="<%= dom_id(translation) %>" class="translation">
 	    <td><%= translation.language %></td>
 	    <td><%= translation.text.html_safe %></td>
-	    <td align="right">
+	    <td>
 	      <%= link_to 'Delete', translation, remote: true, method: :delete, class: 'btn btn-xs btn-danger', data: { confirm: 'Are you sure?' } %>
 	    </td>
 	  </tr>

@@ -16,7 +16,7 @@
     </thead>
 
     <tbody>
-      <%= f.fields_for :translations, layout: :inline, fieldset: false, errors: { messages: true } do |translation| %>
+	<%= f.fields_for :translations, layout: :inline, fieldset: false, include_id: false, errors: { messages: true } do |translation| %>
         <tr id="<%= dom_id(translation.object) %>" class="translation">
 	  <td>
 	    <%= translation.select :language, Source.supported_languages %>
@@ -25,12 +25,13 @@
 	  <td>
 	    <%= translation.text_area :text, class: 'tinymce' %>
 	  </td>
-	  <td align="right">
+	  <td>
 	    <% if translation.object.new_record? %>
 	      <%= link_to 'Delete', '#', :class => 'remove btn btn-xs btn-danger' %>
 	    <% else %>
 	      <%= link_to 'Delete', translation.object, :remote => true, method: :delete, class: 'btn btn-xs btn-danger', data: { confirm: 'Are you sure?' } %>
 	    <% end %>
+	    <%= f.hidden_field :id %>
 	  </td>
 	</tr>
       <% end %>
@@ -54,7 +55,7 @@
 	<td>
 	  <%= translation.text_area :text %>
 	</td>
-	<td align='right'>
+	<td>
 	  <%= link_to 'Delete', '#', :class => 'remove btn btn-xs btn-danger' %>
 	</td>
       </tr>

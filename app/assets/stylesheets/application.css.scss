@@ -41,3 +41,9 @@
 	}
     }
 }
+
+.source, .translation {
+    td:last-of-type {
+	text-align: right;
+    }
+}
