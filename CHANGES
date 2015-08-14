@@ -1,0 +1,5 @@
+v0.0.2  2015-08-14
+--------------------
+* Better support for https domains
+* Improved UI for editing sources and translations
+* Use valid HTML5

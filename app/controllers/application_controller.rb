@@ -13,4 +13,11 @@ class ApplicationController < ActionController::Base
     flash.now[:alert] = "Failed to save translation in the cache: #{ex}"
     render action: action_name
   end
+
+  protected
+
+  def default_url_options
+    # only_path: false will force path helpers (explicit and implicit) to generate URLs
+    @url_options ||= Rails.env.test? || Rails.env.development? || !request.ssl? ? {} : { protocol: 'https', only_path: false }
+  end
 end
