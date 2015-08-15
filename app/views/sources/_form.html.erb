@@ -31,7 +31,7 @@
 	    <% else %>
 	      <%= link_to 'Delete', translation.object, :remote => true, method: :delete, class: 'btn btn-xs btn-danger', data: { confirm: 'Are you sure?' } %>
 	    <% end %>
-	    <%= f.hidden_field :id %>
+	    <%= translation.hidden_field :id %>
 	  </td>
 	</tr>
       <% end %>
