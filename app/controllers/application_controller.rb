@@ -18,9 +18,6 @@ class ApplicationController < ActionController::Base
 
   def default_url_options
     # only_path: false will force path helpers (explicit and implicit) to generate URLs
-    #@url_options ||= Rails.env.test? || Rails.env.development? || !request.ssl? ? {} : { protocol: 'https', only_path: false }
-
-    # FIXME: put !request.ssl? back once header is set correctly by load balancer
-    @url_options ||= Rails.env.test? || Rails.env.development? ? {} : { protocol: 'https', only_path: false }
+    @url_options ||= Rails.env.test? || Rails.env.development? || !request.ssl? ? {} : { protocol: 'https', only_path: false }
   end
 end
