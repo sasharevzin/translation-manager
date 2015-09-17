@@ -25,7 +25,48 @@ class Translations < Thor
     end
   end
 
+  desc "import <csv_file>", "create translations from CSV file of product text"
+  def import(csv_file)
+    CSV.foreach(csv_file, headers: true, skip_blanks: true) do |row|
+      languages = row.headers.dup
+      languages.shift unless languages.first == 'en'
+
+      source_language = languages.shift
+      next unless row[source_language].present?
+
+      source = Source.new
+      source.language = source_language.gsub(/_/,'-')
+
+      if /^\s*$/.match(row[source_language])
+	source.text = html_paragraphs(row[source_language])
+      else
+	source.text = row[source_language]
+      end
+
+      languages.each do |lang|
+	t = Translation.new
+	t.language = lang.dup
+	if /^\s*$/.match(row[lang])
+	  t.text = html_paragraphs(row[lang])
+	else
+	  t.text = row[lang]
+	end
+	source.translations << t
+      end
+
+      begin
+	source.save!
+      rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
+	warn "Error, row #{$.}: #{e}"
+      end
+    end
+  end
+
   no_tasks do
+    def html_paragraphs(text)
+      sprintf "<p>%s</p>", text.split(/^\s*$/).map(&:strip).join("</p><p>")
+    end
+
     def check_language(language)
       raise UnsupportedLanguageError unless Source.supported_languages.include?(language)
     end
@@ -61,28 +102,28 @@ class Translations < Thor
 
     def search_and_write_file(file, language)
       Source.includes(:translations)
-        .where('translations.language = ?', language)
-        .references(:translations)
-        .find_each do |source|
+	.where('translations.language = ?', language)
+	.references(:translations)
+	.find_each do |source|
 
-        translation = source.translations.find_by(language: language)
-        next unless translation
+	translation = source.translations.find_by(language: language)
+	next unless translation
 
-        source_text = source.text.dup
-        source_text_ary = source_text.split("\n")
+	source_text = source.text.dup
+	source_text_ary = source_text.split("\n")
 
-        source_text_ary.each_with_index do |l, idx|
-          l.gsub!("\r",'')
-          file.write(get_source_text_to_write(idx, l, source_text_ary.length))
-        end
+	source_text_ary.each_with_index do |l, idx|
+	  l.gsub!("\r",'')
+	  file.write(get_source_text_to_write(idx, l, source_text_ary.length))
+	end
 
-        translation_text = translation.text.dup
-        translation_text_ary = translation_text.split("\n")
+	translation_text = translation.text.dup
+	translation_text_ary = translation_text.split("\n")
 
-        translation_text_ary.each_with_index do |l, idx|
-          l.gsub!("\r",'')
-          file.write(get_translation_text_to_write(idx, l, translation_text_ary.length))
-        end
+	translation_text_ary.each_with_index do |l, idx|
+	  l.gsub!("\r",'')
+	  file.write(get_translation_text_to_write(idx, l, translation_text_ary.length))
+	end
       end
     end
   end
