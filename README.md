@@ -57,4 +57,4 @@ Capistrano is used for deployments.
 1. [Install Redis](http://redis.io/download) somewhere that can be accessed by `MP::Translations`
 1. Edit `config/initializers/translation_cache.rb` (should not be required unless there's a server change)
 1. Edit `config/deploy/production.rb` (or `staging.rb`, ... should not be required unless there's a server change)
-1. Deploy `cap production deploy # or staging`
+1. Deploy from [the build server](https://us-3.rightscale.com/acct/11898/servers/1065247003) as the build user (or elsewhere): `cap production deploy # or staging`
