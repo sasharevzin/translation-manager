@@ -1,6 +1,12 @@
 # Translations
 
-Translation management application.
+Translation management for [gettext](https://www.gnu.org/software/gettext/) formatted translations.
+
+![Translation List](screenshots/index.png)
+![View Translation](screenshots/show.png)
+![Edit Translation](screenshots/edit.png)
+![Search Translations](screenshots/search.png)
+![Search Translations Results](screenshots/search-results.png)
 
 ## Backends
 
@@ -37,7 +43,7 @@ You need a MySQL database.
 
 ### Development
 
-1. `git clone git@github.com:rgenerator/mp-translations.git`
+1. `git clone git@github.com:ScreenStaring/translations.git`
 1. `cd mp-translations`
 1. `cp config/database.yml.default config/database.yml`
 1. Add DB connection info to `config/database.yml`
