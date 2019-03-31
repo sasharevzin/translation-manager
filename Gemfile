@@ -6,6 +6,7 @@ gem 'bootstrap-sass', '~> 3.3.1'
 gem 'sass-rails', github: 'rails/sass-rails'
 gem 'bh', '1.3.3'
 gem 'bh-flash', :gist => '54235580e1d53b1a9e36'
+# FIXME: We need this
 #gem 'auto_strip_attributes', '~> 2.0'
 gem 'autoprefixer-rails'
 gem 'uglifier', '>= 1.3.0'
@@ -27,7 +28,6 @@ group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'fabrication'
-  gem 'spring'
   gem 'rspec-rails'
   gem 'capybara'
   gem 'guard'
@@ -35,17 +35,11 @@ group :development, :test do
 end
 
 group :development do
-  gem 'rubocop'
-  gem 'rubycritic'
-  gem 'capistrano-rails'
-  gem 'capistrano-bundler' # for capistrano/bundler
-  gem 'capistrano3-unicorn'
   gem 'quiet_assets'
 end
 
 group :test do
   gem 'fakeredis', '~> 0.5.0', require: 'fakeredis/rspec'
   gem 'shoulda'
-  gem 'simplecov'
   gem 'shoulda-matchers', require: false
 end

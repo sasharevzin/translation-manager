@@ -3,7 +3,6 @@ ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
-require 'simplecov'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -25,8 +24,6 @@ require 'simplecov'
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
-
-SimpleCov.start
 
 RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
