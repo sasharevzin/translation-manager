@@ -1,4 +1,4 @@
-# Translations
+# Translation Manager
 
 Translation management for [gettext](https://www.gnu.org/software/gettext/) formatted translations.
 
@@ -43,8 +43,8 @@ You need a MySQL database.
 
 ### Development
 
-1. `git clone git@github.com:ScreenStaring/translations.git`
-1. `cd mp-translations`
+1. `git clone git@github.com:ScreenStaring/translation-manager.git`
+1. `cd translation-manager`
 1. `cp config/database.yml.default config/database.yml`
 1. Add DB connection info to `config/database.yml`
 1. [Install Redis](http://redis.io/download) (optional -but recommended)
