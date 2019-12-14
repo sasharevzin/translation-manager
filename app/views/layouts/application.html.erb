@@ -14,7 +14,9 @@
   <%= navbar do %>
     <%= vertical do %>
       <%= link_to root_path do %>
-	<%= image_tag 'logo.png', :size => '25x25' %>
+        <%- if File.exists?('logo.png') %>
+	  <%= image_tag 'logo.png', :size => '25x25' %>
+        <% end %>
 	Translations
       <% end %>
     <% end %>
