@@ -7,14 +7,6 @@ class Translations < Thor
   # Needed to avoid circular reference caused by observers + Rails autoloading
   Dir['./app/models/*.rb'].each { |path| require path }
 
-  class Cache < Thor
-    desc 'load', 'load all of the translations into the cache'
-    def load
-      cache = TranslationCache.new
-      Translation.includes(:source).find_in_batches { |t| cache.update(t) }
-    end
-  end
-
   desc 'export <languages>', "export PO file(s) for the given language(s). Supported languages are: #{Source.supported_languages.to_sentence}"
   def export(language, *others)
     (others << language).each do |language|
