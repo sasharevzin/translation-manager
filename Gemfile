@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.1'
 gem 'mysql2'
-gem 'bootstrap-sass', '~> 3.3.1'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'sass-rails', github: 'rails/sass-rails'
 gem 'bh', '1.3.3'
 gem 'bh-flash', :gist => '54235580e1d53b1a9e36'
