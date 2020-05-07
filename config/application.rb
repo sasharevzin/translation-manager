@@ -9,6 +9,8 @@ Bundler.require(*Rails.groups)
 module Translations
   class Application < Rails::Application
     config.active_record.observers = [:translation_observer, :source_observer]
+    config.autoload_paths += ["#{config.root}/app/services"]
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

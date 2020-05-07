@@ -48,6 +48,7 @@ class TranslationCache
     be = Array( I18n.backend.respond_to?(:backends) ? I18n.backend.backends : I18n.backend ).
          find { |b| b.is_a?(I18n::Backend::KeyValue) }
 
+    # If we have a be then we have a #store
     @cache = be.respond_to?(:store) ? be.store : nil
   end
 
@@ -57,6 +58,7 @@ class TranslationCache
   end
 
   def delete_supported?
+    # This is Redis specific
     cache.respond_to?(:del)
   end
 
