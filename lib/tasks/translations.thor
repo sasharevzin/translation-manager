@@ -12,53 +12,15 @@ class Translations < Thor
     (others << language).each do |language|
       check_language(language)
       file = generate_file_with_comments(language)
-      search_and_write_file(file, language)
-      close_file_with_comments(file, language)
-    end
-  end
-
-  desc "import <csv_file>", "create translations from CSV file of product text"
-  def import(csv_file)
-    CSV.foreach(csv_file, headers: true, skip_blanks: true) do |row|
-      languages = row.headers.dup
-      languages.shift unless languages.first == 'en'
-
-      source_language = languages.shift
-      next unless row[source_language].present?
-
-      source = Source.new
-      source.language = source_language.gsub(/_/,'-')
-
-      if /^\s*$/.match(row[source_language])
-	source.text = html_paragraphs(row[source_language])
-      else
-	source.text = row[source_language]
-      end
-
-      languages.each do |lang|
-	t = Translation.new
-	t.language = lang.dup
-	if /^\s*$/.match(row[lang])
-	  t.text = html_paragraphs(row[lang])
-	else
-	  t.text = row[lang]
-	end
-	source.translations << t
-      end
-
       begin
-	source.save!
-      rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
-	warn "Error, row #{$.}: #{e}"
+        search_and_write_file(file, language)
+      ensure
+        file.close
       end
     end
   end
 
   no_tasks do
-    def html_paragraphs(text)
-      sprintf "<p>%s</p>", text.split(/^\s*$/).map(&:strip).join("</p><p>")
-    end
-
     def check_language(language)
       raise UnsupportedLanguageError unless Source.supported_languages.include?(language)
     end
@@ -70,10 +32,6 @@ class Translations < Thor
       file.write "# Language: #{language}\n"
       file.write "#\n"
       file
-    end
-
-    def close_file_with_comments(file, language)
-      file.close
     end
 
     def get_source_text_to_write(idx, text, ary_length)

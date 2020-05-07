@@ -31,6 +31,10 @@ class SourcesController < ApplicationController
     end
   end
 
+  def export
+    TranslationFormats::PO.export(params[:language].presence || "en")
+  end
+
   def update
     if @source.update_attributes(source_params)
       redirect_to @source, notice: 'Source and translations updated'
